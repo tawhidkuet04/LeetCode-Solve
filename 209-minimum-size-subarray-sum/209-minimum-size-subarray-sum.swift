@@ -1,8 +1,7 @@
 class Solution {
     func minSubArrayLen(_ target: Int, _ nums: [Int]) -> Int {
-        var minLength = Int.max
-        var windowStart = 0 
-        var sum = 0
+        var minLength = Int.max, windowStart = 0, sum = 0
+        
         for windowEnd in 0..<nums.count{
             sum += nums[windowEnd]
             
