@@ -17,10 +17,10 @@ class Solution {
         for windowEnd in 0..<inputArray.count{
             mp[inputArray[windowEnd], default: 0 ] += 1
             
-            if !isRepeated(mp){
+            if  mp[inputArray[windowEnd], default: 0 ] <= 1{
                mx = max(mx, windowEnd - windowStart + 1) 
             }else{
-                while( isRepeated(mp) ){
+                while(  mp[inputArray[windowEnd], default: 0 ] > 1){
                     mp[inputArray[windowStart], default: 0] -= 1
                     windowStart += 1
                 }
