@@ -17,7 +17,9 @@ class Solution {
         for windowEnd in 0..<inputArray.count{
             mp[inputArray[windowEnd], default: 0 ] += 1
             
-            if  mp[inputArray[windowEnd], default: 0 ] <= 1{
+            var currentCharCount = mp[inputArray[windowEnd], default: 0 ]
+            
+            if  currentCharCount <= 1{
                mx = max(mx, windowEnd - windowStart + 1) 
             }else{
                 while(  mp[inputArray[windowEnd], default: 0 ] > 1){
