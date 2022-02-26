@@ -5,22 +5,19 @@ class Solution {
         
         for windowEnd in 0..<fruits.count{
           let  val =  mp[fruits[windowEnd], default: 0 ]
-                if val == 0 {
-                    count += 1 
-                }
-                 mp[fruits[windowEnd], default: 0 ] = val + 1
+        
+          mp[fruits[windowEnd], default: 0 ] = val + 1
             
             
             
-            if count <= 2{
+            if mp.count <= 2{
                 mx = max(mx, windowEnd - windowStart + 1)
             }else{
-                while( count > 2){
+                while( mp.count > 2){
                      mp[fruits[windowStart], default: 0 ] -= 1
-                    let val = mp[fruits[windowStart], default: 0 ]
-                        if val == 0 {
-                            count -= 1 
-                        } 
+                     if mp[fruits[windowStart], default: 0 ] == 0 {
+                         mp.removeValue(forKey: fruits[windowStart])
+                     }
                     
                     windowStart += 1
                 }
