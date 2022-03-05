@@ -1,25 +1,23 @@
 class Solution {
     func sortColors(_ nums: inout [Int]) {
-        var zero = 0, left = 0, right = nums.count - 1,  one = 0
+        var p0 = 0 , p2 = nums.count - 1, cur = 0
         
-       zero = nums.reduce(0){  $0 + (($1 == 0) ? 1 : 0)}
-       one = nums.reduce(0){  $0 + (($1 == 1) ? 1 : 0)}
-        // print(one)
-       left = zero 
-        var index = 0 
-        while(index < zero){
-            nums[index] = 0
-            index += 1
+        while(cur <= p2){
+             // print("\(p0) \(p2) \(cur)")
+             if (nums[cur] == 0 ){
+               
+                nums.swapAt(p0, cur)
+                p0 += 1
+                cur += 1
+            
+            }else if (nums[cur] == 2){
+                nums.swapAt(p2, cur)
+                p2 -= 1
+            }else{
+                cur += 1
+            }
         }
-        let oneIndex = left + one
-        while(left < oneIndex){
-            nums[left] = 1
-            left += 1
-        }
-        right = oneIndex
-        while(right < nums.count){
-            nums[right] = 2
-            right += 1
-        }
+        
+        
     }
 }
