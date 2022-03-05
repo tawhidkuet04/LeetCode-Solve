@@ -1,53 +1,32 @@
 class Solution {
     func findUnsortedSubarray(_ nums: [Int]) -> Int {
+        var minVal = nums[nums.count - 1], maxVal = nums[0]
         
-        var minArr = Array(repeating: 0, count: nums.count), maxArr = Array(repeating: 0, count: nums.count)
+        var left = nums.count - 1, right = 0, leftIndex = 0, rightIndex = 0
         
-        var left = 0, right = nums.count - 1
-        
-        for index in 0..<nums.count{
-            if index == 0{
-                maxArr[index] = nums[index]
-            }else{
-                 maxArr[index] = max(maxArr[index - 1], nums[index])
-            }
-        }
-       
-        var end = nums.count - 1
-        for index in stride(from: end, through: 0, by: -1){
-            if index == end {
-                minArr[index] = nums[index]
-            }else{
-              minArr[index] =  min(nums[index], minArr[ index + 1])
-            }
-        }
-          // print("okk")
-        var leftFlag = false, rightFlag = false
-        while(left < right){
-            if(minArr[left] == nums[left]){
-                left += 1
-            }else{
-                 leftFlag = true
+        while( left >= 0 || right < nums.count){
+            if left >= 0{
+                minVal = min(minVal, nums[left])
+                if (minVal != nums[left]){
+                    leftIndex = left
+                }
+                 left -= 1
             }
             
-            if (maxArr[right] == nums[right]){
-                right -= 1
-            }else{
-                rightFlag = true
+            if right < nums.count{
+                maxVal = max(maxVal, nums[right])
+                if (maxVal != nums[right]){
+                    rightIndex = right
+                }
+                  right += 1
             }
-            
-            if(leftFlag && rightFlag){
-                break
-            }
-           
-            
         }
         
-        if ( left >= right){
+        if ( leftIndex >= rightIndex){
             return 0
         }
         
-        return (right - left + 1)
+        return (rightIndex - leftIndex + 1)
         
     }
 }
