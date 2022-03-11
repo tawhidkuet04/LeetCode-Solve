@@ -22,7 +22,11 @@ class Solution {
             return
         }
         var temp = dic[depth, default: []]
-        temp.append(root!.val)
+        if depth % 2 == 1{
+             temp.insert(root!.val, at: 0)
+        }else{
+             temp.append(root!.val)
+        }
         dic[depth] = temp
         dfs(root?.left, depth + 1) 
         dfs(root?.right, depth + 1)
@@ -38,12 +42,7 @@ class Solution {
         for key in dic.keys.sorted{ $0 < $1}{
             var temp = [Int]()
             temp = dic[key, default: []]
-            if index % 2 == 1 {
-                temp =  temp.reversed()
-            }
-            // print(temp)
             ans.append( temp )
-            index += 1
         }
         return ans
     }
