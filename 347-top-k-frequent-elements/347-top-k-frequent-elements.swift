@@ -1,15 +1,17 @@
 class Solution {
     
     func partition( _ nums: inout [Int], _ left: Int, _ right: Int, _ mp: [Int: Int]) -> Int{
-        var pivot = right, left = left, right = right, pIndex = left
-        
-        for index in left..<right{
-            if mp[nums[index], default:0] <= mp[nums[pivot], default:0]{
+        var pivot = left +  ((Int.random(in: 0...nums.count)) % (right - left + 1)), left = left, right = right, pIndex = left
+        print(pivot)
+        let pivotFreq = mp[nums[pivot], default:0]
+        nums.swapAt(pivot, right)
+        for index in stride(from: left, to: right, by: 1){
+            if mp[nums[index], default:0] < pivotFreq{
                 nums.swapAt(index , pIndex)
                 pIndex += 1
             }
         }
-        nums.swapAt(pIndex, pivot)
+        nums.swapAt(right, pIndex)
         return pIndex
     }
     
@@ -24,12 +26,10 @@ class Solution {
         if  index == (nums.count - k){
             topKIndex = index
             return
-        }
-        
-        if index > (nums.count - k){
+        }else if index > (nums.count - k){
             quickSelect( &nums, left, index - 1, k, mp)
         }else{
-            quickSelect( &nums, index , right, k, mp)
+            quickSelect( &nums, index + 1, right, k, mp)
         }
         
     }
@@ -51,7 +51,7 @@ class Solution {
         
         var ans = [Int]()
         
-        for index in topKIndex..<arr.count{
+        for index in (arr.count - k)..<arr.count{
             ans.append(arr[index])
         }
         
