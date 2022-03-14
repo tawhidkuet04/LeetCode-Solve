@@ -40,7 +40,7 @@ class Solution {
     func findKthLargest(_ nums: [Int], _ k: Int) -> Int {
         var arr = nums
         quickSelect( &arr, 0, nums.count - 1, k)
-        print(arr)
+        print(ans)
         return arr[arr.count - k] 
     }
     
