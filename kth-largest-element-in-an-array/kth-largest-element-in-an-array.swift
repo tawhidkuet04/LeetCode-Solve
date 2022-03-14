@@ -6,7 +6,7 @@ class Solution {
         var pivot = right
         
         for index in left..<right{
-            if nums[index] <= nums[pivot]{
+            if nums[index] < nums[pivot]{
                 nums.swapAt(index, pIndex)
                 pIndex += 1
             }
@@ -22,20 +22,18 @@ class Solution {
             return
         }
         
-        var pivot = (left + right)/2
         var index = partition( &nums, left, right )
     
         if index == (nums.count - k){
              ans = index
-             return
+             // return
         }
-        
-        if index < (nums.count - k){
-            quickSelect(&nums, index, right, k)
+        // else if index < (nums.count - k){
+            quickSelect(&nums, index + 1, right, k)
             
-        }else if index > (nums.count - k){
+        // }else if index > (nums.count - k){
             quickSelect(&nums, left, index - 1, k)
-        }
+        // }
       
     }
     
@@ -43,7 +41,7 @@ class Solution {
         var arr = nums
         quickSelect( &arr, 0, nums.count - 1, k)
         print(arr)
-        return arr[ans] 
+        return arr[arr.count - k] 
     }
     
     
