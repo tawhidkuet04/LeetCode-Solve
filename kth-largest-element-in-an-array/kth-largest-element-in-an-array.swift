@@ -25,6 +25,7 @@ class Solution {
         var index = partition( &nums, left, right )
     
         if index == (nums.count - k){
+            print(index)
              ans = index
              return
         }
