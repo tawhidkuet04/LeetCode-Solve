@@ -1,136 +1,51 @@
 class Solution {
-    func findKthLargest(_ nums: [Int], _ k: Int) -> Int {
-        var heap = Heap<Int>{ $0 > $1}
- 
-        for num in nums{
-           heap.push(num)
-          
+    var ans = 0
+    func partition(_ nums: inout [Int], _ left: Int, _ right: Int) -> Int{
+        
+        var pIndex = left
+        var pivot = right
+        
+        for index in left..<right{
+            if nums[index] <= nums[pivot]{
+                nums.swapAt(index, pIndex)
+                pIndex += 1
+            }
         }
-        
-        var count = 0
-        var ans = 0
-        // print(heap.arr)
-        
-        while( count < k){
-            var peek = heap.top()!
-            heap.pop()
-            count += 1
-            ans = peek
-            // print(ans)
-        }
-        return ans
-    }
-    
-    
-    
-       struct Heap<Element>{
-    
-    var arr = [Element]()
-    
-    var compare : (Element,Element) -> Bool
-
-    
-    func getLeftChildIndex(index: Int) -> Int {
-        return 2 * index + 1
-    }
-    
-    func getRightChildIndex(index: Int) -> Int {
-        return 2 * index + 2
-    }
-    
-    func getParentIndex(index: Int) -> Int {
-        return (index - 1)/2
-    }
-    
-    
-    func hasLeftChild(index: Int) -> Bool {
-        return getLeftChildIndex(index: index) < arr.count
-    }
-    
-    func hasRightChild(index: Int) -> Bool {
-        return getRightChildIndex(index: index) < arr.count
-    }
-    
-    func hasParent(index: Int) -> Bool {
-        return getParentIndex(index: index) >= 0
-    }
-    
-    
-    func getLeftChild(index: Int) -> Element {
-        return arr[getLeftChildIndex(index: index)]
-    }
-    
-    func getRightChild(index: Int) -> Element {
-        return arr[getRightChildIndex(index: index)]
-    }
-    
-    func getParent(index: Int) -> Element {
-        return arr[getParentIndex(index: index)]
+        nums.swapAt(pivot, pIndex)
+        return pIndex
+  
         
     }
     
-    public mutating func push(_ value: Element)  {
-        arr.append(value)
-        heapifyUp()
-    }
-    
-    public mutating func pop(){
-        guard arr.count != 0 else{
+    func quickSelect(_ nums: inout [Int], _ left: Int, _ right: Int, _ k: Int){
+        if left >= right{
             return
         }
-        arr.swapAt(0, arr.count - 1)
-        arr.removeLast()
-        heapifyDown()
         
-    }
+        var pivot = (left + right)/2
+        var index = partition( &nums, left, right )
     
-    public mutating func heapifyUp(){
-        
-        var index = arr.count - 1
-        while(hasParent(index: index) && getComparision(first:  arr[index], second: getParent(index: index))){
-            arr.swapAt(index, getParentIndex(index: index))
-            index = getParentIndex(index: index)
+        if index == (nums.count - k){
+             ans = index
+             return
         }
         
-    }
-    
-    public func top() -> Element?{
-        return arr.first
-    }
-    
-    public mutating func heapifyDown(){
-        var index = 0
-        var leftChild: Int = 0
-        var rightChild: Int = 0
-     
-        while( hasLeftChild(index: index) ){
-//            print("sd \(index)")
-            if hasLeftChild(index: index){
-                leftChild = getLeftChildIndex(index: index)
-            }
-            if hasRightChild(index: index){
-                rightChild = getRightChildIndex(index: index)
-                
-               
-                if  getComparision(first: getRightChild(index: index), second: getLeftChild(index: index)) {
-                    leftChild = rightChild
-                }
-                
-            }
+        if index < (nums.count - k){
+            quickSelect(&nums, index, right, k)
             
-            if  getComparision (first: arr[leftChild] , second:  arr[index]){
-                arr.swapAt(index, leftChild)
-            }else{
-                break
-            }
-            index = leftChild
+        }else if index > (nums.count - k){
+            quickSelect(&nums, left, index - 1, k)
         }
-        
+      
+    }
+    
+    func findKthLargest(_ nums: [Int], _ k: Int) -> Int {
+        var arr = nums
+        quickSelect( &arr, 0, nums.count - 1, k)
+        print(arr)
+        return arr[ans] 
     }
     
     
-        public func getComparision(first: Element, second: Element) -> Bool {
-            return compare(first, second)
-        } 
-  }
+   
 }
