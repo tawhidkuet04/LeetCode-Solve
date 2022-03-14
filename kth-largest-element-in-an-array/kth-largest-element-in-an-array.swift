@@ -26,14 +26,14 @@ class Solution {
     
         if index == (nums.count - k){
              ans = index
-             // return
+             return
         }
-        // else if index < (nums.count - k){
+        else if index < (nums.count - k){
             quickSelect(&nums, index + 1, right, k)
             
-        // }else if index > (nums.count - k){
+        }else if index > (nums.count - k){
             quickSelect(&nums, left, index - 1, k)
-        // }
+        }
       
     }
     
