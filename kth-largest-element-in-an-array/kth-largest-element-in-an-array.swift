@@ -19,13 +19,16 @@ class Solution {
     
     func quickSelect(_ nums: inout [Int], _ left: Int, _ right: Int, _ k: Int){
         if left >= right{
+            if left == (nums.count - k){
+                ans = left
+            }
             return
         }
         
         var index = partition( &nums, left, right )
     
         if index == (nums.count - k){
-            print(index)
+             print("index \(index)")
              ans = index
              return
         }
@@ -42,7 +45,7 @@ class Solution {
         var arr = nums
         quickSelect( &arr, 0, nums.count - 1, k)
         print(ans)
-        return arr[arr.count - k] 
+        return arr[ans] 
     }
     
     
