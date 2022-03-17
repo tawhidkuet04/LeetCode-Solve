@@ -5,25 +5,6 @@ class Solution {
             x = 0, y = 0, firstTurn = false, secondTurn = false,
             thirdTurn = false
         
-       
-        
-//         if matrix.count == 1{
-            
-//             var ans = [Int]()
-//             for index in 0..<matrix[0].count{
-//                 ans.append(matrix[0][index])
-//             }
-//             return ans
-//         }
-        
-//         if matrix[0].count == 1{
-//              var ans = [Int]()
-//             for index in 0..<matrix.count{
-//                 ans.append(matrix[index][0])
-//             }
-//             return ans
-//         }
-        
         var spiralArr = [Int]()
 
         
