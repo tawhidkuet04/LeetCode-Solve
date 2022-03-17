@@ -1,6 +1,5 @@
 class Solution {
     func spiralOrder(_ matrix: [[Int]]) -> [Int] {
-        var matrix = matrix
         var row = matrix.count, col = matrix[0].count, rowUp = 1, colUp = 0,
             x = 0, y = 0, firstTurn = false, secondTurn = false,
             thirdTurn = false
