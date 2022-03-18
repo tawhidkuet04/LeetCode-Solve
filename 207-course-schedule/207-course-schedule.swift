@@ -12,7 +12,6 @@ class Solution {
             if vis[graph[node][index]] == 0{
                  dfs(graph[node][index])
             }else if vis[graph[node][index]] == 1{
-                print("aaaa")
                 ans = false
                 return
             }
@@ -35,7 +34,7 @@ class Solution {
         
         print(graph)
         for index in 0..<numCourses{
-            if vis[index] == 0{
+            if vis[index] == 0 {
                 dfs(index)
             }
         }
