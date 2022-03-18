@@ -35,7 +35,7 @@ class Solution {
         
         print(graph)
         for index in 0..<numCourses{
-            if vis[index] == 0 && graph[index].count > 0{
+            if vis[index] == 0{
                 dfs(index)
             }
         }
