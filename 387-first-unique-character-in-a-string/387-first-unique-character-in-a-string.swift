@@ -9,16 +9,12 @@ class Solution {
             dictCount[str[index], default: 0 ] += 1
         }
         
-        for (key, val) in dictCount{
-            if val == 1{
-                ans = min(ans, dictIndex[key, default:0])
-            }
+        for index in 0..<str.count{
+            if dictCount[str[index], default: 0] == 1{
+               return index
+             }
         }
         
-        if ans == str.count{
-            return -1
-        }
-        
-        return ans
+        return -1
     }
 }
