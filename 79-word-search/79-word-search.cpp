@@ -21,13 +21,10 @@ public:
             int newRow = fx[index] + row;
             int newCol = fy[index] + col;
            
-
-               
                 isFound |= wordSearch(newRow, newCol, charIndex + 1, word, board);
                 if(isFound){
                     return true;
                 }
-                // board[newRow][newCol] = word[charIndex];
             }
      board[row][col] = word[charIndex];
     
