@@ -7,7 +7,7 @@ public:
     
     
     
-    bool wordSearch(int row, int col, int charIndex, string word, vector<vector<char>>& board, int visited[7][7]){
+    bool wordSearch(int row, int col, int charIndex, string word, vector<vector<char>>& board){
         if (charIndex >= word.size()){
             return true;
         }
@@ -18,13 +18,13 @@ public:
             int newRow = fx[index] + row;
             int newCol = fy[index] + col;
            
-            if ( (newRow >= 0 && newRow < board.size()) && (newCol >= 0 && newCol < board[0].size()) && board[newRow][newCol] == word[charIndex] && !visited[newRow][newCol]){
-                visited[newRow][newCol] = 1;
-                isFound |= wordSearch(newRow, newCol, charIndex + 1, word, board , visited);
-                if(isFound){
-                    return true;
-                }
-                visited[newRow][newCol] = 0;
+            if ( (newRow >= 0 && newRow < board.size()) && (newCol >= 0 && newCol < board[0].size()) && board[newRow][newCol] == word[charIndex]){
+                board[newRow][newCol] = '*';
+                isFound |= wordSearch(newRow, newCol, charIndex + 1, word, board);
+                // if(isFound){
+                //     return true;
+                // }
+                 board[newRow][newCol] = word[charIndex];
             }
         }
         
@@ -33,13 +33,13 @@ public:
     }
     
     bool exist(vector<vector<char>>& board, string word) {
-        int visited[7][7] = {0};
+        
         for(int row = 0; row < board.size(); row ++){
             for(int col = 0; col < board[0].size(); col ++){
                 if(board[row][col] == word[0]){
-                    memset(visited, 0, sizeof(visited));
-                    visited[row][col] = 1;
-                   bool isFound =  wordSearch(row, col, 1, word, board, visited);
+                   board[row][col] = '*';
+                   bool isFound =  wordSearch(row, col, 1, word, board);
+                   board[row][col] = word[0];
                     if(isFound){
                         return true;
                     }
