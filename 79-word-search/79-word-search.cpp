@@ -21,9 +21,9 @@ public:
             if ( (newRow >= 0 && newRow < board.size()) && (newCol >= 0 && newCol < board[0].size()) && board[newRow][newCol] == word[charIndex]){
                 board[newRow][newCol] = '*';
                 isFound |= wordSearch(newRow, newCol, charIndex + 1, word, board);
-                // if(isFound){
-                //     return true;
-                // }
+                if(isFound){
+                    return true;
+                }
                  board[newRow][newCol] = word[charIndex];
             }
         }
