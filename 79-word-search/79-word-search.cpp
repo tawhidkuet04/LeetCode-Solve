@@ -12,22 +12,25 @@ public:
             return true;
         }
         
+         if ( row <  0 || row >= board.size() || col < 0 || col >= board[0].size() || board[row][col] != word[charIndex]){
+                        return false;
+                    }
         bool isFound = false;
-        
+         board[row][col] = '*';
         for(int index = 0; index < 4; index ++){
             int newRow = fx[index] + row;
             int newCol = fy[index] + col;
            
-            if ( (newRow >= 0 && newRow < board.size()) && (newCol >= 0 && newCol < board[0].size()) && board[newRow][newCol] == word[charIndex]){
-                board[newRow][newCol] = '*';
+
+               
                 isFound |= wordSearch(newRow, newCol, charIndex + 1, word, board);
                 if(isFound){
                     return true;
                 }
-                 board[newRow][newCol] = word[charIndex];
+                // board[newRow][newCol] = word[charIndex];
             }
-        }
-        
+     board[row][col] = word[charIndex];
+    
         return isFound;
         
     }
@@ -37,9 +40,9 @@ public:
         for(int row = 0; row < board.size(); row ++){
             for(int col = 0; col < board[0].size(); col ++){
                 if(board[row][col] == word[0]){
-                   board[row][col] = '*';
-                   bool isFound =  wordSearch(row, col, 1, word, board);
-                   board[row][col] = word[0];
+                   
+                   bool isFound =  wordSearch(row, col, 0, word, board);
+                   
                     if(isFound){
                         return true;
                     }
