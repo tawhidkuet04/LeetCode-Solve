@@ -1,37 +1,33 @@
 class Solution {
     func firstMissingPositive(_ nums: [Int]) -> Int {
-        var set = Set<Int>()
-        var negNumCount = 0
-        var flag = 0
+        var arr = nums
+        var size = nums.count
         
-        for num in nums{
-            if num <= 0 || num > nums.count{
-                set.insert(0)
-                flag = 1
-            }else{
-                set.insert(num)
+        for index in 0..<arr.count{
+            if arr[index] < 0 || arr[index] > size{
+                arr[index] = 0
             }
-            if num < 0{
-                negNumCount += 1
+        }
+        
+        for index in 0..<arr.count{
+            var newIndex = abs(arr[index])
+            print(newIndex)
+            if newIndex > 0  && newIndex <= arr.count{
+                if arr[newIndex - 1] == 0{
+                arr[newIndex - 1] = -(arr.count + 1)
+                }else if arr[newIndex - 1] > 0 {
+                     arr[newIndex - 1] *= -1
+                }
             }
             
         }
-        
-        if set.count == nums.count && flag == 0{
-            return nums.count + 1
-        }
-        
-        if negNumCount == nums.count{
-            return 1
-        }
-        
-        for index in 1...nums.count{
-            if !set.contains(index){
-                return index
+        print(arr)
+        for index in 0..<arr.count{
+            if arr[index] >= 0 && arr[index] <= arr.count{
+                return index + 1
             }
         }
         
-        return 0
-        
+        return arr.count + 1
     }
 }
