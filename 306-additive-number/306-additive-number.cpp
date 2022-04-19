@@ -62,7 +62,7 @@ public:
                 // if(start > 0 && firstNum.size() == 0){
                 //     break;
                 // }
-                firstNum = num.substr(0, start + 1 );
+                firstNum = num.substr(index, start + 1 );
                 isValid |= isAdditive(start + 1, firstNum , secondNum, thirdNum, numberChoosed + 1, num);
             }else if(numberChoosed == 1){
                 
