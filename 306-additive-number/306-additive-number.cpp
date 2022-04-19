@@ -59,9 +59,9 @@ public:
             }
             if(numberChoosed == 0){
                 
-                if(start > 0 && firstNum.size() == 0){
-                    break;
-                }
+                // if(start > 0 && firstNum.size() == 0){
+                //     break;
+                // }
                 firstNum = num.substr(0, start + 1 );
                 isValid |= isAdditive(start + 1, firstNum , secondNum, thirdNum, numberChoosed + 1, num);
             }else if(numberChoosed == 1){
@@ -78,9 +78,6 @@ public:
                 if(isSumEqual(firstNum, secondNum, thirdNum)){
                     cout << firstNum << " " << secondNum << "ans sssssss" << thirdNum  << endl;
                     if(start == num.size() - 1) {
-         //                if (firstNum.size() > 1 && firstNum[0] == '0' ) return  false;
-         // if (secondNum.size() > 1 && secondNum[0] == '0' ) return  false;
-         // if (thirdNum.size() > 1 && thirdNum[0] == '0' ) return  false;
                         return true;
                     }
                     string newThirdNum = "";
