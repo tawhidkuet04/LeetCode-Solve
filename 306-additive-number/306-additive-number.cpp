@@ -78,9 +78,9 @@ public:
                 if(isSumEqual(firstNum, secondNum, thirdNum)){
                     cout << firstNum << " " << secondNum << "ans sssssss" << thirdNum  << endl;
                     if(start == num.size() - 1) {
-                        if (firstNum.size() > 1 && firstNum[0] == '0' ) return  false;
-         if (secondNum.size() > 1 && secondNum[0] == '0' ) return  false;
-         if (thirdNum.size() > 1 && thirdNum[0] == '0' ) return  false;
+         //                if (firstNum.size() > 1 && firstNum[0] == '0' ) return  false;
+         // if (secondNum.size() > 1 && secondNum[0] == '0' ) return  false;
+         // if (thirdNum.size() > 1 && thirdNum[0] == '0' ) return  false;
                         return true;
                     }
                     string newThirdNum = "";
