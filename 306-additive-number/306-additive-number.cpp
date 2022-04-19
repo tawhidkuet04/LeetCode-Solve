@@ -31,20 +31,12 @@ public:
        
     }
     
-//     1123
-//     (0, "","","",0)
-    
-//     (1,1,"","",1) -> (2,1,1,"",2)->(3,1,1,2,2)->(4,1,2,"",2)
     bool isAdditive(int index, string firstNum, string secondNum, string thirdNum, int numberChoosed, string num){
-        
-         cout << firstNum << " " << secondNum << " " << thirdNum  << endl;
          if (firstNum.size() > 1 && firstNum[0] == '0' ) return  false;
          if (secondNum.size() > 1 && secondNum[0] == '0' ) return  false;
          if (thirdNum.size() > 1 && thirdNum[0] == '0' ) return  false;
         if(index >= num.size()){
-           
            if(isSumEqual(firstNum, secondNum, thirdNum)){
-                  cout << firstNum << " " << secondNum << "ans sssssss" << thirdNum  << endl;
                 return true;
             }else{
                 return false;
@@ -65,25 +57,17 @@ public:
                 isValid |= isAdditive(start + 1, firstNum, secondNum , thirdNum, numberChoosed + 1, num);
             }else{
                 thirdNum += num[start];
-                // thirdNum = num.substr(index ,  start + 1 );
-                // cout <<  thirdNum << endl;
-              
-               
+                
                 if(isSumEqual(firstNum, secondNum, thirdNum)){
-                    cout << firstNum << " " << secondNum << "ans sssssss" << thirdNum  << endl;
                     if(start == num.size() - 1) {
                         return true;
                     }
-                    string newThirdNum = "";
-                    newThirdNum += num[start];
                     isValid |= isAdditive(start + 1, secondNum, thirdNum, "", numberChoosed, num);
                 }else if( thirdNum.size() > (firstNum.size() + secondNum.size())){
                     return isValid | false;
                 }
-                
                 else{
                     isValid |= isAdditive(start + 1, firstNum, secondNum, thirdNum, numberChoosed, num);
-                    // thirdNum.pop_back();
                 }
                 
             }
