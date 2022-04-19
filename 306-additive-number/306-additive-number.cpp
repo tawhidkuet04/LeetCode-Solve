@@ -58,16 +58,10 @@ public:
                 break;
             }
             if(numberChoosed == 0){
-                
-                // if(start > 0 && firstNum.size() == 0){
-                //     break;
-                // }
-                firstNum = num.substr(index, start + 1 );
+                firstNum += num[start];
                 isValid |= isAdditive(start + 1, firstNum , secondNum, thirdNum, numberChoosed + 1, num);
             }else if(numberChoosed == 1){
-                
-                // secondNum = num.substr(firstNum.size(), start - firstNum.size() + 1 );
-                secondNum = num.substr(index,  start - index + 1);
+                secondNum += num[start];
                 isValid |= isAdditive(start + 1, firstNum, secondNum , thirdNum, numberChoosed + 1, num);
             }else{
                 thirdNum += num[start];
