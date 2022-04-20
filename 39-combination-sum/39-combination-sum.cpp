@@ -12,7 +12,7 @@ public:
             ans.push_back(combination);
             return;
         }
-        if( sum > target) {
+        if( sum > target || index >= candidates.size()) {
             return;
         }
         
