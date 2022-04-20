@@ -5,21 +5,27 @@ public:
     void makeCombinationSum(int index, vector<int> &candidates, 
                             vector< vector<int> > &ans, 
                             vector<int> &combination, int sum, int target){
+        // cout << sum << endl;
+        if( sum == target){
+            for(int i = 0 ; i < combination.size(); i ++) cout << combination[i]<< " " ;
+            cout<<endl;
+            ans.push_back(combination);
+            return;
+        }
         if( sum > target || index >= candidates.size()) {
             return;
         }
         
-        if( sum == target){
-            ans.push_back(combination);
-            return;
-        }
         
-        sum += candidates[index];
-        combination.push_back(candidates[index]);
-        makeCombinationSum( index, candidates, ans, combination, sum, target);
-        sum -= candidates[index];
-        combination.pop_back();
-        makeCombinationSum( index + 1, candidates, ans, combination, sum, target); 
+        
+        for(int start = index; start < candidates.size(); start ++){
+            sum += candidates[start];
+            combination.push_back(candidates[start]);
+            makeCombinationSum( start, candidates, ans, combination, sum , target);
+            sum -= candidates[start];
+            combination.pop_back();
+        }
+
     }
     
 
