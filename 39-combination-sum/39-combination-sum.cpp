@@ -5,19 +5,14 @@ public:
     void makeCombinationSum(int index, vector<int> &candidates, 
                             vector< vector<int> > &ans, 
                             vector<int> &combination, int sum, int target){
-        // cout << sum << endl;
         if( sum == target){
-            for(int i = 0 ; i < combination.size(); i ++) cout << combination[i]<< " " ;
-            cout<<endl;
             ans.push_back(combination);
             return;
         }
-        if( sum > target || index >= candidates.size()) {
+        if( sum > target) {
             return;
         }
-        
-        
-        
+
         for(int start = index; start < candidates.size(); start ++){
             sum += candidates[start];
             combination.push_back(candidates[start]);
