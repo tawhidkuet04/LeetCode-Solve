@@ -16,19 +16,11 @@ public:
         }
         
         for(int start = index; start < candidates.size(); start ++ ){
+            if(start > index && candidates[start - 1] == candidates[start]) continue;
             if( candidates[start] > sum ) break;
-            if(start  != index){
-                if( start > 0 && candidates[start - 1] != candidates[start]){
-                    combination.push_back(candidates[start]);
-                   findCombinations(start + 1, candidates, ansSet, combination, sum - candidates[start]); 
-                   combination.pop_back();
-                }
-                
-            }else{
-              combination.push_back(candidates[start]);
-               findCombinations(start + 1, candidates, ansSet, combination, sum -candidates[start]); 
-               combination.pop_back();
-            }
+            combination.push_back(candidates[start]);
+            findCombinations(start + 1, candidates, ansSet, combination, sum - candidates[start]); 
+            combination.pop_back();
         }
       
         
