@@ -12,7 +12,6 @@ public:
         if(sum < 0 ) return ;
         
         for(int start = nextNum; start <= 9; start ++ ){
-            // if(combination.size() > 0 && combination.back() == start) continue ;
             if(start > sum ) break;
             combination.push_back(start);
             findCombination(index + 1, sum - start, k , combination, ans, start + 1);
