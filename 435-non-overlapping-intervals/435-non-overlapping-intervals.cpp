@@ -2,7 +2,7 @@ class Solution {
 public:
     
     
-    bool isFirstInterValBigger(vector<int> first, vector<int> second){
+    bool isFirstInterValBigger(vector<int> &first, vector<int> &second){
         
         if(first[1] > second[1]){
             return true;
