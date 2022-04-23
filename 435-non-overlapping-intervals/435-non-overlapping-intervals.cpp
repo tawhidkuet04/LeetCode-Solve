@@ -27,8 +27,8 @@ public:
         int ans = 0;
         
         while(secondIndex < size){
-             auto firstInterval = intervals[firstIndex];
-             auto secondInterval = intervals[secondIndex];
+             auto &firstInterval = intervals[firstIndex];
+             auto &secondInterval = intervals[secondIndex];
              
             if(firstInterval[1] > secondInterval[0]){
                 ans ++ ;
