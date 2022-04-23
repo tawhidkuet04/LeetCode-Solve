@@ -14,13 +14,7 @@ public:
             return 0;
         }
         
-        sort(intervals.begin(), intervals.end(), [](auto const &first, auto const &second){
-           if(first[0] < second[0]){
-               return true;
-           }else if(first[0] == second[0]){
-               return first[1] > second[1];
-           }else return false;
-        });
+        sort(intervals.begin(), intervals.end());
         
         int firstIndex = 0, secondIndex = 1, size = intervals.size();
         
