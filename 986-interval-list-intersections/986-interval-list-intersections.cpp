@@ -9,8 +9,7 @@ public:
         if(first[1] >= second[0]){
             int start = min(first[1], second[0]);
             int end = min(first[1], second[1]);
-            overLapped.push_back(start);
-            overLapped.push_back(end);
+            overLapped.insert( overLapped.begin(), {start, end});
             return overLapped;
         }else{
             return overLapped;
