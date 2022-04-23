@@ -14,7 +14,7 @@ public:
             return 0;
         }
         
-        sort(intervals.begin(), intervals.end(), [](auto const &first, auto const &second){
+        sort(intervals.begin(), intervals.end(), [](auto  &first, auto  &second){
            if(first[0] < second[0]){
                return true;
            }else if(first[0] == second[0]){
