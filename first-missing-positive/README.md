@@ -1,3 +1,4 @@
+[Discussion Post (created on 26/3/2022 at 5:45)](https://leetcode.com/problems/first-missing-positive/discuss/1982569/C%2B%2B-Simple-Cyclic-Sort-Solution-(O(N)-time-and-O(1)-Space))  
 <h2>  First Missing Positive</h2><hr><div><p>Given an unsorted integer array <code>nums</code>, return the smallest missing positive integer.</p>
 
 <p>You must implement an algorithm that runs in <code>O(n)</code> time and uses constant extra space.</p>
