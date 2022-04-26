@@ -9,7 +9,6 @@ public:
         while(lo <= hi){
             int mid = lo + (hi - lo)/2;
             int kValueLessThanCurPos  = (arr[mid] - mid - 1);
-            cout << mid << " " << kValueLessThanCurPos <<endl;
             if(  kValueLessThanCurPos < k ){
                 pos = mid;
                 lo = mid + 1;
@@ -17,7 +16,6 @@ public:
                 hi = mid - 1;
             }
         }
-        cout << pos;
         int missingNumCount =  k - (arr[pos] - pos - 1); 
         int ans = arr[pos] + missingNumCount;
         return ans;
