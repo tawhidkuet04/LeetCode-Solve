@@ -1,45 +1,32 @@
 class Solution {
 public:
-    string minRemoveToMakeValid(string s) {
-        int open = 0;
-        
-        int size = s.size();
-        
+    
+    
+    string removeInvalidClosing(string &s, char open, char close){
+         int balance = 0;
+         int size = s.size();
+         string sb = "";
         for(int index = 0; index < size; index ++ ){
-            if(s[index] == '('){
-               open ++ ;
-            }else if(s[index] == ')'){
-                if( open == 0){
-                    s[index] = '#';
+            if(s[index] == open){
+               balance ++ ;
+            }else if(s[index] == close){
+                if( balance == 0){
+                    continue;
                 }else{
-                    open -- ;
+                    balance -- ;
                 }
             }
+            sb += s[index];
         }
-        
-        open = 0;
-        
-         for(int index = size - 1; index >= 0 ; index -- ){
-            if(s[index] == ')'){
-               open ++ ;
-            }else if(s[index] == '('){
-                if( open == 0){
-                    s[index] = '#';
-                }else{
-                    open -- ;
-                }
-            }
-        }
-        
-        // if(open > 0 ) return "";
-        
-        string validStr = "";
-        
-        for(int index = 0; index < size; index ++){
-          if(s[index] != '#') validStr += s[index];
-        }
-        
-        return validStr;
+        return sb;
+    }
+    string minRemoveToMakeValid(string s) {
+       
+      string ans = removeInvalidClosing(s, '(', ')');
+    reverse(ans.begin(), ans.end());
+    ans = removeInvalidClosing(ans, ')', '(');
+    reverse(ans.begin(), ans.end());
+    return ans;
         
     }
 };
