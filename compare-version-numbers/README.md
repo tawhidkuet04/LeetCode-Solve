@@ -1,3 +1,4 @@
+[Discussion Post (created on 29/3/2022 at 19:37)](https://leetcode.com/problems/compare-version-numbers/discuss/1991710/C%2B%2B-Two-Pointer-Solution-(O(N%2BM)-Time-and-O(1)-Space))  
 <h2>  Compare Version Numbers</h2><hr><div><p>Given two version numbers,&nbsp;<code>version1</code> and <code>version2</code>, compare them.</p>
 
 <ul>
