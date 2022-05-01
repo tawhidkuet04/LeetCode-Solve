@@ -7,13 +7,13 @@ public:
         int size = s.size();
         
         for( int index = 0; index < size; index ++ ){
-            charMap[s[index]] = index  ;
+            charMap[s[index]] ++  ;
         }
         for(int index = 0; index < size; index ++ ){
-         
+             charMap[s[index]]--;
             if( charMapForStack[s[index]] == 0){
                 
-            while(!st.empty() && s[st.top()] >= s[index] && charMap[s[st.top()]] > index){
+            while(!st.empty() && s[st.top()] >= s[index] && charMap[s[st.top()]] >= 1){
                
                     charMapForStack[s[st.top()]] --;
                     st.pop();
@@ -23,8 +23,6 @@ public:
                   st.push(index);
                 
             }
-                
-               
             }
         
         string ans = "";
