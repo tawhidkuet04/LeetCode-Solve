@@ -19,12 +19,13 @@ public:
             if(!st.empty()){
                 int topIndex = st.top();
 
-                curAns =  (arr[index]  % mod * (index - topIndex) % mod) % mod; 
-                curAns  = (curAns % mod + (previousLess[topIndex] % mod) ) % mod;
+                curAns =  (arr[index] * (index - topIndex)) % mod; 
+                curAns  = (curAns + (previousLess[topIndex]) ) % mod;
             }else{
-                 curAns  = (arr[index] % mod * (index + 1)  % mod) % mod;
+                 curAns  = (arr[index] * (index + 1)) % mod;
             }
-            ans = (ans % mod + curAns % mod ) % mod;
+            ans = (ans + curAns ) % mod;
+            
             previousLess[index] = curAns;
         
             st.push(index);
