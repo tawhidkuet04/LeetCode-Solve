@@ -1,7 +1,7 @@
 class Solution {
 public:
     void insertElement(int index, deque<int> &dq, vector<int>& nums, int k ){
-        while(!dq.empty() && dq.back() == (index - k )){
+        while(!dq.empty() && dq.back() <= (index - k )){
             dq.pop_back();
         }
         
