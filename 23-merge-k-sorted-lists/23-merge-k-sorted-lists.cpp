@@ -15,8 +15,6 @@ public:
     // 2 4 - 5 
     
      ListNode* mergeTwoList( ListNode *first, ListNode *second){
-         if(first == NULL) return second ;
-         if(second == NULL) return first;
         ListNode *prevNode = new ListNode(-1);
          
         ListNode *prev = prevNode;
