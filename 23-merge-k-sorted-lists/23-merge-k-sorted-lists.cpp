@@ -38,13 +38,20 @@ public:
          int size = lists.size();
         if(size == 0) return NULL;
         if(size <= 1) return lists[0];
+        int interval = 1;
+        while(interval < size){
+             for(int index = 0; index < (size - interval); index += (interval * 2)){
+                 lists[index] = mergeTwoList(lists[index], lists[index + interval]);
+            }
+            
+            interval *= 2;
         
-        for(int index = 1; index < size; index ++){
-            lists[index] = mergeTwoList(lists[index], lists[index - 1]);
         }
-        
-        ListNode *ans = lists[size - 1];
+       
+        ListNode *ans = lists[0];
         return ans;
         
     }
+    
+    // 1 2 3 4 5
 };
