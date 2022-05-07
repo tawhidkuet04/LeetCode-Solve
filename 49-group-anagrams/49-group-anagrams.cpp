@@ -1,12 +1,13 @@
 class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        map<string, vector<string> > mp ;
+        unordered_map<string, vector<string> > mp ;
         
         
         for(int index = 0 ; index < strs.size(); index ++ ){
             string str = strs[index];
-            int charValArr[26] = {0};
+            // int charValArr[26] = {0};
+            unordered_map<char, int > charValArr;
             
             for(int charIndex = 0 ; charIndex < str.size(); charIndex ++ ){
                   charValArr[ str[charIndex] - 'a' ] ++ ;
