@@ -12,34 +12,45 @@ public:
 class Solution {
 public:
     
-    Node *getRoot( Node *p){
-        if(p->parent == NULL) return p;
-            
-         return getRoot(p->parent);    
+    int getLengthFromRoot(Node *temp){
+        int cnt = 0;
         
-    }
-
-    Node *getLca(Node *root, Node *p, Node *q){
-        if( root == NULL || root == p || root == q) return root;
-        
-        Node *left = getLca(root->left, p, q);
-        Node *right = getLca(root->right, p, q);
-        
-        if(left == NULL){
-            return right;
-        }else if(right == NULL){
-            return left;
-        }else{
-            return root;
+        while(temp != NULL){
+            temp = temp->parent;
+            cnt ++;
         }
         
-        
+        return cnt;
+    }
+
+    Node* goToEqualDepth(Node *temp, int depth){
+        while(depth --){
+            temp = temp->parent;
+        }
+        return temp;
     }
     
+    
     Node* lowestCommonAncestor(Node* p, Node * q) {
+           
+        Node *pCopy = p;
+        Node *qCopy = q;
         
-        Node *root = getRoot(p);
+        int pLength = getLengthFromRoot(pCopy);
+        int qLength = getLengthFromRoot(qCopy);
         
-        return getLca(root, p, q);
+        if(pLength > qLength){
+            p = goToEqualDepth(p, pLength - qLength);
+        }else{
+            q =  goToEqualDepth(q, qLength - pLength);
+        }
+        
+        while(p != q){
+            p = p->parent;
+            q = q->parent;
+        }
+        
+        return p;
+          
     }
 };
