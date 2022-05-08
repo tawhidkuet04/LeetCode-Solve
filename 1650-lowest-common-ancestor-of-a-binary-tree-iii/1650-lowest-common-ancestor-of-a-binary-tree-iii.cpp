@@ -33,18 +33,14 @@ public:
     
     Node* lowestCommonAncestor(Node* p, Node * q) {
            
-        Node *pCopy = p;
-        Node *qCopy = q;
-        
-        int pLength = getLengthFromRoot(pCopy);
-        int qLength = getLengthFromRoot(qCopy);
+        int pLength = getLengthFromRoot(p);
+        int qLength = getLengthFromRoot(q);
         
         if(pLength > qLength){
             p = goToEqualDepth(p, pLength - qLength);
         }else{
             q =  goToEqualDepth(q, qLength - pLength);
         }
-        
         while(p != q){
             p = p->parent;
             q = q->parent;
