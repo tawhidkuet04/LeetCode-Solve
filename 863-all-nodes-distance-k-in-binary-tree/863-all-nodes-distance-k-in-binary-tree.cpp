@@ -40,15 +40,15 @@ public:
                 
                 ans.push_back(top->val);
                 
-                if(top->left != NULL && !vis[top->left]){
+                if(top->left  && !vis[top->left]){
                     q.push(top->left);
                     vis[top->left] = 1;
                 }
-                if(top->right != NULL && !vis[top->right]){
+                if(top->right && !vis[top->right]){
                     q.push(top->right);
                     vis[top->right] = 1;
                 }
-                if(mp.find(top) != mp.end() && !vis[mp[top]] && mp[top] != NULL){
+                if(mp[top] && !vis[mp[top]] ){
                     q.push(mp[top]);
                     vis[mp[top]] = 1;
                 }
