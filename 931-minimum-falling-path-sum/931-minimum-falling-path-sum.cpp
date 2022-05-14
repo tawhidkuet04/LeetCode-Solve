@@ -21,7 +21,7 @@ public:
         int rowSize = matrix.size();
         int colSize = matrix[0].size();
         
-        vector< vector<int> > dp(rowSize, vector<int> (colSize, 0));
+        vector< int > dp(colSize, 0);
         
         int ans = INT_MAX;
         
@@ -30,23 +30,27 @@ public:
 //         }
         
         for(int index = 0; index < colSize; index ++ ){
-            dp[0][index] = matrix[0][index];
+            dp[index] = matrix[0][index];
         }
         
         for(int row = 1; row < rowSize; row ++){
+            
+             vector< int > tempDp(colSize, 0);
+            
             for(int col = 0 ; col < colSize; col ++ ){
                 int left = INT_MAX, right = INT_MAX, up = INT_MAX;
                 
-               if(col > 0 )left = matrix[row][col] + dp[row - 1][col - 1];
-               if( col < colSize - 1)right = matrix[row][col] + dp[row - 1][col + 1];
-                up = matrix[row][col] + dp[row - 1][col];
+               if(col > 0 )left = matrix[row][col] + dp[col - 1];
+               if( col < colSize - 1)right = matrix[row][col] + dp[col + 1];
+                up = matrix[row][col] + dp[col];
                 
-                dp[row][col] = min(left, min(up, right));
+                tempDp[col] = min(left, min(up, right));
             }
+            dp = tempDp;
         }
         
         for(int index = 0; index< colSize; index ++ ){
-            ans = min(ans, dp[rowSize - 1][index]);
+            ans = min(ans, dp[index]);
         }
         
         
