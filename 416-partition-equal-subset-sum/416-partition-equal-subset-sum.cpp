@@ -27,7 +27,7 @@ public:
         }
         if(sum % 2 == 1) return false;
         int subsetSum = sum /2;
-        vector< vector<bool> > dp(sz + 1, vector<bool> (sum, false));
+        vector< vector<bool> > dp(sz + 1, vector<bool> (subsetSum + 200, false));
         
         
         for(int index = 0; index < sz; index ++ ){
