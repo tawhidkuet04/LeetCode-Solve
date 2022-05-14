@@ -40,9 +40,48 @@ public:
         int rowSize = grid.size();
         int colSize = grid[0].size();
         
-        vector< vector<vector<int>>  > dp(rowSize, vector<vector<int> >(colSize,  vector<int>(colSize, - 1)));
+        vector< vector<vector<int>>  > dp(rowSize, vector<vector<int> >(colSize,  vector<int>(colSize, -1e8)));
         
-
-        return solve(0, 0 , 0, grid[0].size() - 1, grid, dp);
+        dp[0][0][colSize - 1] = ( 0 == colSize - 1) ? grid[0][0] : grid[0][0] + grid[0][colSize - 1];
+        
+        
+        for(int row = 1; row < rowSize; row ++ ){
+            for(int j1 = 0; j1 < colSize; j1 ++ ){
+                for(int j2 = 0; j2 < colSize; j2 ++ ){
+                    
+                    int maxi = -1e8;
+                    
+                    for(int i = -1; i <= 1 ; i ++ ){
+                        for(int j = -1 ; j <= 1; j ++ ){
+                            
+                            int val = grid[row][j1];
+                            
+                            if( j1 != j2){
+                                val += grid[row][j2];
+                            }
+                            
+                            if( (j1 + i ) < 0 || (j1 + i) >= colSize || (j2 + j) >= colSize || (j2 + j) < 0) {
+                                val = -1e8;
+                                continue;
+                            }
+                            maxi = max(maxi, val + dp[row - 1][j1 + i][j2 + j]);
+                            
+                        }
+                    }
+                    
+                    dp[row][j1][j2] = maxi ;
+                }
+            }
+        }
+        
+        int ans = 0;
+        for(int i = 0; i < colSize; i ++ ){
+            for(int j = 0; j < colSize; j ++ ){
+                ans = max(ans, dp[rowSize - 1][i][j]);
+            }
+        }
+        return ans;
+        
+        // return solve(0, 0 , 0, grid[0].size() - 1, grid, dp);
     }
 };
