@@ -3,25 +3,30 @@ public:
     int minimumTotal(vector<vector<int>>& triangle) {
         int rowSize = triangle.size();
         int colSize = triangle[rowSize - 1].size();
-        vector< vector<int> > dp(rowSize, vector<int>(colSize, 10000000));
+        vector< int > dp(rowSize, 10000000);
 
-        dp[0][0] = triangle[0][0];
+        dp[0] = triangle[0][0];
 
         for(int i = 1 ; i < rowSize; i ++ ){
+            vector< int > tempDp(rowSize, 10000000);
             for(int j = 0 ; j < i + 1; j ++ ){
-                int left = dp[i-1][j] + triangle[i][j];
+                int left = dp[j] + triangle[i][j];
                 int right = 10000000;
-                if(j > 0 ) right = dp[i - 1][ j - 1] + triangle[i][j];
-                dp[i][j] = min(left, right);
+                if(j > 0 ) right = dp[ j - 1] + triangle[i][j];
+                tempDp[j] = min(left, right);
             }
-            cout << endl;
+            dp = tempDp;
         }
 
         int ans = 10000000;
         for(int i = 0; i  < colSize; i ++ ){
-            ans = min(ans, dp[rowSize - 1][i]);
+            ans = min(ans, dp[i]);
         }
         return ans;
 	
     }
 };
+
+// 1
+// 1 2
+// 1 2 3
