@@ -21,9 +21,63 @@ public:
         
         return dp[index1][index2] = max(take, max(takeFirst, takeSecond));
     }
-    int longestCommonSubsequence(string text1, string text2) {
-        vector< vector<int> > dp(text1.size(), vector<int> (text2.size(), -1));
+    
+    int solveTabulation(string &text1, string &text2,  vector< vector<int> > &dp){
+        // string temp = text1;
+        // text1 = text2;
+        // text2 = temp;
+        // cout << text1 << " " << text2 << endl;
+        if(text1[0] == text2[0])dp[0][0] = 1;
+        for(int index = 1 ; index < text2.size(); index ++ ){
+            if(text1[0] == text2[index]){
+                 dp[0][index] = 1;
+            }else{
+                dp[0][index] = max(dp[0][index - 1], 0);
+            }
+        }
+        for(int index = 1 ; index < text1.size(); index ++ ){
+            if(text1[index] == text2[0]){
+                 dp[index][0]  = 1;
+            }else{
+              dp[index][0] = max(dp[index - 1][0], 0);
+            }
+        }
         
-        return solve(0,0, text1, text2, dp);
+        for(int index1 = 1; index1 < text1.size();  index1 ++ ){
+            for(int index2 = 1; index2 < text2.size(); index2 ++ ){
+                int take =  dp[index1 - 1][index2 - 1],takeFirst = -1e8, takeSecond = -1e8;
+                if(text1[index1] == text2[index2]){
+                    take = 1 + dp[index1 - 1][index2 - 1];
+                }else{
+                    takeFirst = dp[index1 - 1][index2];
+                    takeSecond = dp[index1][index2 - 1];
+                }
+               dp[index1][index2] = max(take, max(takeFirst, takeSecond));
+            }
+        }
+        
+        //  for(int index1 = 0; index1 < text1.size();  index1 ++ ){
+        //     for(int index2 = 0; index2 < text2.size(); index2 ++ ){
+        //         cout <<  dp[index1][index2] << " ";
+        //     }
+        //      cout << endl;
+        // }
+        
+        
+        return dp[text1.size() - 1][text2.size() - 1];
+        
+        
+    }
+    
+    int longestCommonSubsequence(string text1, string text2) {
+        vector< vector<int> > dp(text1.size() + 100, vector<int> (text2.size() + 100, 0));
+        
+        // return solve(0,0, text1, text2, dp);
+        return solveTabulation(text1, text2, dp);
     }
 };
+
+//  a b c d e
+// a 1 
+// c
+// e
