@@ -26,8 +26,13 @@ public:
         
     }
     
+   
     int longestPalindromeSubseq(string s) {
         vector< vector< int > > dp(s.size() + 1, vector<int> (s.size() + 1, - 1));
+        
+        // reverse and lcs
+        // return solveTabulation(s);
+        
         return solve(0, s.size() - 1, s, dp);
     }
 };
