@@ -1,25 +1,38 @@
 class Solution {
 public:
     int sumOddLengthSubarrays(vector<int>& arr) {
-        int sz = arr.size();
         
-        vector<int> prefixSum(sz + 1, 0);
+        int sum = 0, sz = arr.size() ;
         
-        for(int index = 1; index <= sz; index ++ ){
-            prefixSum[index] = prefixSum[index - 1] + arr[index - 1];
-        }
-        
-        int ans = 0, index = 1 ;
-        
-        while(index <= sz){
-            for(int range = index; range <= sz; range ++){
-                ans += prefixSum[range] - prefixSum[range - index];
+        for(int index = 0; index < sz; index ++ ){
+            int leftPortion = index + 1;
+            int rightPortion = sz - index ;
+            
+            int totalPortion = leftPortion * rightPortion ;
+            
+            int oddLengthPortion =  totalPortion / 2;
+            if(totalPortion % 2){
+                oddLengthPortion += 1;
             }
-            index += 2;
+            sum += oddLengthPortion * arr[index];
         }
-        return ans;
+        
+        return sum;
+
     }
 };
+  
 
-// [1,4,2,5,3]
+//     0 1 2 3 4 
+// // [1,4,2,5,3]
+//           3 
+//           3
+//           5
 
+//  1 - 3
+//  3 - 2
+//  5 - 1
+     
+        
+     
+     
