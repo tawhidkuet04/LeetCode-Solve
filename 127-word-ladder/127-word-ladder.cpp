@@ -1,44 +1,55 @@
 class Solution {
 public:
-
     
-    int ladderLength(string beginWord, string endWord, vector<string>& wordList){
-        unordered_set<string> wordSet;
-        int size = wordList.size();
-        
-        for(int i = 0; i < size; i ++){
-            wordSet.insert(wordList[i]);
-        }
-        
+    int bfs(string beginWord, string endWord, vector<string>& wordList, unordered_map<string,int> &mp){
         queue<string> q;
-        unordered_map<string,int> depth;
         q.push(beginWord);
-        depth[beginWord] = 1;
         
+        int step = 1 ;
+        mp[beginWord] = 0;
         while(!q.empty()){
-            string word = q.front();
-            q.pop();
-            if(word == endWord){
-               return depth[word];
-             } 
-             
-        
-            for(int i = 0; i < word.size(); i ++ ){
-                string tempWord = word;
-                for(int j = 0; j < 26; j ++){
-                   tempWord[i] = j + 'a';
-                    if(tempWord == word)continue;
-                   
-                   if(wordSet.find(tempWord) != wordSet.end()){
-                       q.push(tempWord);
-                       depth[tempWord] = (depth[word] + 1);
-                       wordSet.erase(tempWord);
-                   }
+           
+            int qSize = q.size();
+            for(int qIndex = 0; qIndex< qSize; qIndex ++ ){
+                
+                 string str = q.front();
+                 q.pop();
+                 int strSize = str.size();
+                
+                for(int index = 0; index < strSize; index ++){
+                for(char ch = 'a'; ch <= 'z'; ch ++ ){
+                    string transformedChar = str;
+                    transformedChar[index] = ch;
+                    
+                    if(mp[transformedChar]){
+                        cout << transformedChar << endl;
+                        mp[transformedChar] = 0;
+                        if(transformedChar == endWord){
+                            return step + 1;
+                        }
+                        q.push(transformedChar);
+                    }
                 }
             }
+            }
+            
+            
+            step ++ ;
+            
         }
         return 0;
         
+    }
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_map<string,int> mp;
+        
+        int sz = wordList.size();
+        
+        for(int index = 0; index < sz; index ++ ){
+            mp[wordList[index]] = 1;
+        }
+        
+        return bfs(beginWord, endWord, wordList, mp );
         
     }
 };
