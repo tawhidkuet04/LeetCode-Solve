@@ -39,10 +39,12 @@ public:
         for(char ch = 'a'; ch <= 'z'; ch ++){
             totalCount += mp[ch];
         }
-        totalCount -= mp[mostFreq];
-        cout <<  totalCount << endl;
-        
-        if((mp[mostFreq] - 1) > totalCount  ) return "";
+        // totalCount -= mp[mostFreq];
+         int limit =  totalCount/ 2;
+        if( totalCount % 2 ){
+            limit =  totalCount/ 2 + 1;
+        }
+        if((mp[mostFreq]) > limit ) return "";
         int index = 0;
         
         while(mp[mostFreq]){
