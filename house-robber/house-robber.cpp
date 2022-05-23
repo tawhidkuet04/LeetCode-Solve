@@ -23,20 +23,30 @@ public:
         
         dp[0][0] = 0;
         dp[0][1] = nums[0];
+        int takenPrev = nums[0];
+        int notTakenPrev = 0;
         
         for(int index = 1; index < sz; index ++ ){
+            int curTaken = 0, curNotTaken = 0;
             for(int prevTaken = 0; prevTaken < 2; prevTaken ++ ){
                 int take = 0, notTake = 0;
                     if(prevTaken == 1){
-                      take = nums[index] + dp[index - 1][0];
+                      take = nums[index] + notTakenPrev;
                     }
-                     notTake = dp[index - 1][1];
+                     notTake = takenPrev;
                 
-                   dp[index][prevTaken] = max(take, notTake);
+                   if(prevTaken == 0 ){
+                       curNotTaken = max(take, notTake);
+                   }else{
+                       curTaken = max(take, notTake);
+                   }
+                   // dp[index][prevTaken] = max(take, notTake);
             }
+            
+            notTakenPrev = curNotTaken;
+            takenPrev = curTaken;
         }
         
-        return max(dp[sz - 1][0], dp[sz - 1][1]);
-        // return solve(0, 0, nums, dp);
+        return max(takenPrev, notTakenPrev);
     }
 };
