@@ -22,7 +22,7 @@ public:
                     transformedChar[index] = ch;
                     
                     if(mp[transformedChar]){
-                        cout << transformedChar << endl;
+                        
                         mp[transformedChar] = 0;
                         if(transformedChar == endWord){
                             return step + 1;
