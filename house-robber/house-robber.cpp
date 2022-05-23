@@ -19,10 +19,6 @@ public:
         
         int sz = nums.size();
         
-        vector< vector<int> > dp(sz + 1 , vector<int> (3, 0));
-        
-        dp[0][0] = 0;
-        dp[0][1] = nums[0];
         int takenPrev = nums[0];
         int notTakenPrev = 0;
         
@@ -40,7 +36,6 @@ public:
                    }else{
                        curTaken = max(take, notTake);
                    }
-                   // dp[index][prevTaken] = max(take, notTake);
             }
             
             notTakenPrev = curNotTaken;
