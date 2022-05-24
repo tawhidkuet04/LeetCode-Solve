@@ -24,34 +24,31 @@ public:
         dfs(root->right, false, sum);
         
     }
+    bool isLeaf(TreeNode *node){
+        
+        return (node != NULL && node->left == NULL && node->right == NULL);
+    }
     
     int solve(TreeNode* root, int &sum){
-        stack< pair<TreeNode*, bool> > st;
+        stack< TreeNode* > st;
         
-        st.push(make_pair(root, false));
+        st.push(root);
         
         while(!st.empty()){
-            auto top = st.top();
+            TreeNode *node = st.top();
             st.pop();
             
-            TreeNode *node = top.first;
-            bool isFromLeft = top.second;
-            
-            if(node != NULL){
-            if(node->left == NULL && node ->right == NULL){
-                if(isFromLeft){
-                    sum += node->val;
-                }
+            if(isLeaf(node->left)){
+                sum += node->left->val;
             }
             
             if(node->left != NULL){
-                st.push(make_pair(node->left, true));
+                st.push(node->left);
             }
             
-            if(node -> right != NULL){
-                st.push(make_pair(node->right, false));
+            if(node->right != NULL){
+                st.push(node->right);
             }
-        }   
             
         }
         
