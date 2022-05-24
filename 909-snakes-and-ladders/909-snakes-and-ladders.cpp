@@ -1,127 +1,85 @@
 class Solution {
 public:
     
-    struct IndexElement{
-        int label;
-        bool isPrevSnake;
-        int minStep;
+    pair<int,int> intToSquare(int label, int n ){
         
-        IndexElement(int label, bool isPrevSnake, int minStep){
-            this->label = label;
-            this->isPrevSnake = isPrevSnake;
-            this->minStep = minStep;
-        }
-    };
-     void mapIndices(vector<vector<int>> & board, map<int, pair<int,int> > &mp){
-        int boardSize = board.size();
-         
-        int col = 0, row = boardSize - 1 ;
+        int row = (label - 1)/n;
+        int col = 0;
         
-        int totalSize = 1;
-        
-        bool flip = false;
-        
-        while(row >= 0){
-            mp[totalSize] = make_pair(row, col);
-            
-            if (!flip){
-                 col ++;
-            }else{
-                 col --;
-            }
-           
-            
-            totalSize ++;
-            
-            if( col >= boardSize){
-                col = boardSize - 1;
-                flip = true;
-                row -- ;
-            }else if (col < 0 ){
-                flip = false;
-                col = 0;
-                row --;
-            }
+        if(row % 2){
+            col = n - 1 - ((label - 1) % n );
+        }else{
+            col = (label - 1) % n ;
         }
         
+        return make_pair(row, col);
         
     }
-    
-    
-    int bfs( vector<vector<int>> & board, map<int, pair<int,int> > &mp){
-        queue<IndexElement> q;
+    int bfs( vector<vector<int>> & board){
         
         int n = board.size();
         
-        q.push(IndexElement(1, false, 0));
-        vector< int > vis(n * n + 10, 0);
+        vector< vector<int> > vis (n + 1 , vector<int>(n + 1 , 0) );
         
-
+        vis[0][0] = 1;
+        
+        queue< int >  q;
+        
+        q.push(1);
+        
+        int step = 0 ;
         
         while(!q.empty()){
-            
             int qSize = q.size();
             
             for(int index = 0; index < qSize; index ++ ){
-                IndexElement front = q.front();
-                
+                auto curSquare = q.front();
                 q.pop();
                 
-                int step = front.minStep;
-                int label = front.label;
-                bool isPrevSnake = front.isPrevSnake;
-                
-                int limit = n * n ;
-                
-                int range = min(label + 6, limit );
-                
-                for(int start = label + 1; start <= range ; start ++ ){
-                    int curLabel = start ;
-                    // cout << curLabel << endl;
-                    int curX = mp[curLabel].first;
-                    int curY = mp[curLabel].second;
+                for(int label = curSquare + 1; label <= min(curSquare + 6, n * n ); label ++ ){
+                   auto ind = intToSquare(label, n);
                     
-                    if(curLabel == limit ){
+                   int x = ind.first;
+                   int y = ind.second;
+
+                    
+                    int nextSquare = label;
+                    
+                    if(board[x][y] != -1){
+                        nextSquare = board[x][y];
+                    }
+                    
+                    if(nextSquare == (n*n)){
                         return step + 1;
                     }
-                     
-                    if ( (board[curX][curY] == -1 ) && !vis[curLabel]){
-                         vis[curLabel] = 1;
-                        q.push(IndexElement(curLabel, false, step + 1));
-                    }else if (board[curX][curY] != -1  &&   !vis[curLabel]){
-                        vis[curLabel] = 1;
-                        int jumpLabel = board[curX][curY];
-                        
-                        if(jumpLabel == limit ){
-                            return step + 1;
-                         }
-                        
-                        // if(!vis[jumpLabel]){
-                        //     vis[jumpLabel] = 1;
-                            q.push(IndexElement(jumpLabel, true, step + 1));
-                        // }
-                        
+                    
+                    if(!vis[x][y]){
+                        vis[x][y] = 1;
+                        q.push(nextSquare);
                     }
                 }
-            }  
+                
+               
+                
+            }
+             step ++;
         }
         
-        return - 1;
+        return -1 ;
+        
+
     }
     
    
     
     int snakesAndLadders(vector<vector<int>>& board) {
-        map<int, pair<int,int> > mp;
-        
-        mapIndices(board, mp);
-        
-        // int n = board.size();
-        
-        // for(int index = 1; index <= (n * n); index++ ){
-        //     cout << mp[index].first << " " << mp[index].second << endl; 
+        reverse(board.begin(), board.end());
+        // for(int row = 0; row < board.size(); row ++ ){
+        //     for(int col = 0; col < board.size(); col ++ ){
+        //         cout << board[row][col] << " ";
+        //     }
+        //     cout << endl;
         // }
-        
-        return bfs(board, mp);
+        return bfs(board);
     }
 };
