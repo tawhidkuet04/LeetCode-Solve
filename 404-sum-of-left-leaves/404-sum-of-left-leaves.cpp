@@ -25,11 +25,45 @@ public:
         
     }
     
+    int solve(TreeNode* root, int &sum){
+        stack< pair<TreeNode*, bool> > st;
+        
+        st.push(make_pair(root, false));
+        
+        while(!st.empty()){
+            auto top = st.top();
+            st.pop();
+            
+            TreeNode *node = top.first;
+            bool isFromLeft = top.second;
+            
+            if(node != NULL){
+            if(node->left == NULL && node ->right == NULL){
+                if(isFromLeft){
+                    sum += node->val;
+                }
+            }
+            
+            if(node->left != NULL){
+                st.push(make_pair(node->left, true));
+            }
+            
+            if(node -> right != NULL){
+                st.push(make_pair(node->right, false));
+            }
+        }   
+            
+        }
+        
+        return sum;
+        
+    }
+    
     int sumOfLeftLeaves(TreeNode* root) {
         int ans = 0;
         
-        dfs(root, false, ans );
-        
+        // dfs(root, false, ans );
+        solve(root, ans);
         return ans;
     }
 };
