@@ -19,11 +19,11 @@ public:
             mx = max(mx, to);
         }
         
-        if(path[0] >capacity) return false;
+        int total = 0;
         
-        for(int index = 1; index <= mx; index ++ ){
-            path[index] += path[index - 1];
-            if(path[index] > capacity) return false;
+        for(int index = 0; index <= mx; index ++ ){
+            total += path[index];
+            if(total > capacity) return false;
         }
         return true;
     }
