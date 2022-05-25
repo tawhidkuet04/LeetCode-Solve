@@ -1,35 +1,34 @@
 class Solution {
 public:
-   
-    vector< int > graph [50005];
-    void dfs( int process,vector<int> &vis, vector<int> & ans){
+
+    void dfs( int process, map<int, vector<int>> &mp,  vector<int> & ans){
         
         ans.push_back(process);
-        vis[process] =1;
-        for(int index = 0; index < graph[process].size();  index ++ ){
-             int nextProcess = graph[process][index];
-             if(!vis[nextProcess]){
-               
-                 dfs(nextProcess,vis, ans);
-             }
+    
+        for(int index = 0; index < mp[process].size();  index ++ ){
+             int nextProcess = mp[process][index];
+               dfs(nextProcess,mp, ans);
         }
     }
     
     vector<int> killProcess(vector<int>& pid, vector<int>& ppid, int kill) {
        
        vector<int> ans ; 
-       
-       vector< int > vis(50005, 0);
+    
+       map<int, vector<int>>mp;
+      
        int sz = pid.size();
         
        for(int index = 0; index < sz; index ++ ){
            
            if( ppid[index] != 0 ){
-                 graph[ppid[index]].push_back(pid[index]);
+                // auto vect = mp[ppid[index]];
+                // vect.push_back(pid[index]);
+                mp[ppid[index]].push_back(pid[index]);
            }
        }
         
-        dfs(kill, vis, ans);
+        dfs(kill, mp, ans);
         
         return ans;
         
