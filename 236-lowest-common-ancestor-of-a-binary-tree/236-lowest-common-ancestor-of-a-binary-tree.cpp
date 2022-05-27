@@ -22,9 +22,6 @@ public:
         TreeNode *right = lca(root->right, p, q);
         
         if( left != NULL && right != NULL){
-            // if(ans == NULL){
-            //     ans = root;
-            // }
             return root;
         }else if(left == NULL){
            return right;
