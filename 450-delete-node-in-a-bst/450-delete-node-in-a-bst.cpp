@@ -37,17 +37,14 @@ public:
             if(root->left != NULL & root->right != NULL){
                 TreeNode *node = inorderSuccesor(root->right);
                 root->val = node->val;
-                int val = node->val;
-                TreeNode *temp =  delNode(root->right, val);
+                TreeNode *temp =  delNode(root->right, node->val);
                 root->right = temp;
                 return root;
                 
             }else if(root->left == NULL){
-                TreeNode *temp = root->right;
-                return temp;
+                return  root->right;
             }else {
-                TreeNode *temp = root->left;
-                return temp;
+                return root->left;
             }
         }else{
               return root;
