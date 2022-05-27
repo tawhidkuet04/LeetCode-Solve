@@ -24,12 +24,12 @@ public:
     TreeNode *delNode(TreeNode *root, int key){
         if(root == NULL) return root;
         
-        // if(root->val > key){
+        if(root->val > key){
              root->left = delNode(root->left, key);
-        // }
-         // if(root->val < key){
+        }
+         if(root->val < key){
           root->right = delNode(root->right, key);
-         // }/
+         }
         
       
         
