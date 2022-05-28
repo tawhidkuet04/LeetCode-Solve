@@ -29,30 +29,33 @@ public:
     }
     
     int solve2(vector<int>& coins, int amount){
-         vector< vector<int> > dp(coins.size(), vector<int> (amount + 10, 1e8));
+         vector< int> prev(amount + 10, 1e8);
         
          int sz = coins.size();
         
          for(int limit = 0; limit <= amount ; limit ++){
              if( limit % coins[0] == 0){
-                 dp[0][limit] = limit / coins[0];
+                 prev[limit] = limit / coins[0];
              }else{
-                 dp[0][limit] = 1e8;
+                 prev[limit] = 1e8;
              }
          }
         
         for(int index = 1; index < sz; index ++ ){
+              vector< int> cur(amount + 10, 1e8);
             for(int limit = 0; limit <= amount; limit ++){
                  int take = 1e8;
                  if(limit - coins[index] >= 0){
-                      take = 1 + dp[index][limit - coins[index]];
+                      take = 1 + cur[limit - coins[index]];
                  }
-                 int notTake = dp[index - 1][limit];
-                 dp[index][limit] = min(take, notTake);
+                 int notTake = prev[limit];
+                 cur[limit] = min(take, notTake);
             }
+            prev = cur;
         }
-        if(dp[sz-1][amount] == 1e8) return -1;
-        else return dp[sz-1][amount]; 
+        
+        if(prev[amount] == 1e8) return -1;
+        else return prev[amount]; 
         
     }
     
