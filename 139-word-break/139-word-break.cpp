@@ -16,12 +16,13 @@ public:
         for(int start = index ; start < s.size(); start ++ ){
               string str = s.substr(index, start - index + 1);
               // cout << str << endl;
-              if(mp[str] & solve(start + 1, s, mp, dp)){
-                  return  dp[index] = true;
+              if(mp[str]){
+                  bool newFlag = true & solve(start + 1, s, mp, dp);
+                  flag = max(flag, newFlag);
               }
         }
         
-         return  dp[index] = false;
+         return  dp[index] = flag;
     }
     
     bool wordBreak(string s, vector<string>& wordDict) {
