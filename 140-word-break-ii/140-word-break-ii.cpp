@@ -18,7 +18,8 @@ public:
                   // }else{
                   //     sentence += " " + str;
                   // }
-                    solve(start + 1, s, ans, sentence + str + " " , mp);
+                    string newStr = sentence + str + " ";
+                    solve(start + 1, s, ans, newStr , mp);
               }
         }
 
