@@ -26,16 +26,13 @@ public:
          int sz = nums.size();
          int lisIndex = 0;
          for(int index = 0; index < sz; index ++ ){
-              // cout << lisIndex << " "<< lis.size() << endl;
              if(lisIndex == 0){
                  lis.push_back(nums[index]);
                  lisIndex ++ ;
              }else{
-                // cout << lis[0] << endl;
                  if(lis[lisIndex - 1] < nums[index]){
                      lis.push_back(nums[index]);
                      lisIndex ++;
-                     // cout << lisIndex << endl;
                  }else{
                      int insertIndex = getLisIndex(lis, nums[index]);
                      cout << insertIndex << endl;
