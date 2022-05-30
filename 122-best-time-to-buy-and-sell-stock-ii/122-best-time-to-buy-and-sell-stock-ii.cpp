@@ -27,8 +27,8 @@ public:
     }
     
     int iterativeDp(vector<int> &prices){
-         vector< vector<int> > dp(prices.size(), vector<int> (2, 0));
-        dp[0][1] = - prices[0];
+         vector< int> dp(2, 0), cur(2, 0);
+         dp[1] = - prices[0];
         
         int sz = prices.size();
         
@@ -36,16 +36,18 @@ public:
             for(int buy = 0; buy < 2; buy ++ ){
                 int take = 0 ;
                 if(buy){
-                    take = - prices[index] + dp[index - 1][0]; 
+                    take = - prices[index] + dp[0]; 
                 }else{
-                    take =  prices[index] + dp[index - 1][1];
+                    take =  prices[index] + dp[1];
                 }
-                int notTake = dp[index - 1][buy];
-                dp[index][buy] = max(take, notTake);
+                int notTake = dp[buy];
+                cur[buy] = max(take, notTake);
             }
+            dp = cur;
+            
         }
         
-        return dp[sz - 1][0];
+        return dp[0];
     }
     
     int maxProfit(vector<int>& prices) {
