@@ -26,7 +26,30 @@ public:
          return solve(0, 0, prices, dp);
     }
     
+    int iterativeDp(vector<int> &prices){
+         vector< vector<int> > dp(prices.size(), vector<int> (2, 0));
+        dp[0][1] = - prices[0];
+        
+        int sz = prices.size();
+        
+        for(int index = 1; index < sz; index ++ ){
+            for(int buy = 0; buy < 2; buy ++ ){
+                int take = 0 ;
+                if(buy){
+                    take = - prices[index] + dp[index - 1][0]; 
+                }else{
+                    take =  prices[index] + dp[index - 1][1];
+                }
+                int notTake = dp[index - 1][buy];
+                dp[index][buy] = max(take, notTake);
+            }
+        }
+        
+        return dp[sz - 1][0];
+    }
+    
     int maxProfit(vector<int>& prices) {
-       return recursicveDp(prices);
+       // return recursicveDp(prices);
+       return iterativeDp(prices);
     }
 };
