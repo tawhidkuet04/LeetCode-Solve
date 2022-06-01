@@ -9,11 +9,7 @@ public:
         }
         
         if(index >= prices.size()){
-            if(count == limit){
-                return 0;
-            }else{
-                return -1e7;
-            }
+               return 0;
         }
         
         if(dp[index][buy][count]  != -1) return dp[index][buy][count] ;
@@ -37,16 +33,16 @@ public:
         
         vector< vector< vector<int> > > dp(prices.size(), vector<vector<int> > (2, vector<int>(2,-1)));
         
-        int one = solve(0, 0, 0, prices, dp, 1);
-        for(int index = 0; index < prices.size(); index ++){
-            for(int buy = 0; buy < 2; buy ++ ){
-                for(int count = 0; count < 2; count ++){
-                    dp[index][buy][count] = -1;
-                }
-            }
-        }
-        int two = solve(0, 0, 0, prices, dp, 2);
-        int ans = max(one, two );
+        // int one = solve(0, 0, 0, prices, dp, 1);
+        // for(int index = 0; index < prices.size(); index ++){
+        //     for(int buy = 0; buy < 2; buy ++ ){
+        //         for(int count = 0; count < 2; count ++){
+        //             dp[index][buy][count] = -1;
+        //         }
+        //     }
+        // }
+        // int two = solve(0, 0, 0, prices, dp, 2);
+        int ans = solve(0, 0, 0, prices, dp, 2);
         
         if( ans < 0){return 0;}
         return ans;
