@@ -9,7 +9,7 @@ public:
         }
         
         if(index >= prices.size()){
-             if(didTransaction >= limit){
+             if(didTransaction <= limit){
                 return 0;
              }else{
                  return -1e8;
@@ -37,20 +37,7 @@ public:
     int maxProfit(int k, vector<int>& prices) {
         vector< vector<vector<int> > > dp(prices.size(), vector< vector<int> > (2, vector<int>(k + 1,-1)));
         
-        int ans = 0;
-        
-        for(int index = 1; index <= k; index ++){
-            for(int dpIndex = 0; dpIndex < prices.size(); dpIndex ++ ){
-                for(int buy = 0; buy < 2; buy ++){
-                    for(int count = 0; count <= k ; count ++ ){
-                        dp[dpIndex][buy][count] = -1;
-                    }
-                }
-            }
-           
-            ans = max(ans, solve(0, 0, 0, index, prices, dp));
-        }
-        
-        return ans;
+      
+        return solve(0, 0, 0, k, prices, dp);
     }
 };
