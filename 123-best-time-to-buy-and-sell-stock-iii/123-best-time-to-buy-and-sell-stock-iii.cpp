@@ -9,7 +9,8 @@ public:
         }
         
         if(index >= prices.size()){
-               return 0;
+              if(count <= limit) return 0;
+            else return -1e8;
         }
         
         if(dp[index][buy][count]  != -1) return dp[index][buy][count] ;
