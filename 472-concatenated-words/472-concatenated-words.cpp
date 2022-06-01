@@ -4,9 +4,9 @@ public:
     
     bool canMake(string word, unordered_map<string,int> &mp, unordered_map<string,int> &dp){
         
-//         if(dp[word]){
-//             return true;
-//         }
+        if(dp[word]){
+            return true;
+        }
         
         
         for(int index = 1; index < word.size(); index ++ ){
@@ -14,7 +14,7 @@ public:
             string right = word.substr(index);
             if(mp[left]){
                 if(mp[right] || canMake(right, mp, dp)){
-                    dp[right] = 1;
+                    dp[word] = 1;
                     return true;
                 }
             }
