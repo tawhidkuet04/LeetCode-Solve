@@ -13,11 +13,6 @@ public:
         for(int start = index ; start < s.size(); start ++ ){
               string str = s.substr(index, start - index + 1);
               if(mp[str]){
-                  // if(sentence.size() == 0){
-                  //     sentence += str;
-                  // }else{
-                  //     sentence += " " + str;
-                  // }
                     string newStr = sentence + str + " ";
                     solve(start + 1, s, ans, newStr , mp);
               }
