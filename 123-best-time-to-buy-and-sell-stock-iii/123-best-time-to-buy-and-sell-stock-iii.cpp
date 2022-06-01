@@ -37,10 +37,10 @@ public:
 
         for(int index = prices.size() - 1 ; index >= 0 ; index -- ){
             for(int buy = 0; buy < 2; buy ++ ){
-                for(int count = 1; count <= 2; count ++ ){
+                for(int count = 2; count >= 0; count -- ){
                     int take = 0;
                     if(buy){
-                        take = prices[index] + dp[index + 1][0][count - 1];
+                        take = prices[index] + dp[index + 1][0][count + 1];
                     }else{
                         take = -prices[index] + dp[index + 1][1][count];
                     }
@@ -51,7 +51,7 @@ public:
             }
         }
         
-        return dp[0][1][2];
+        return dp[0][0][1];
         
         
         
@@ -60,11 +60,11 @@ public:
     int maxProfit(vector<int>& prices) {
         
         
-         vector< vector< vector<int> > > dp(prices.size() + 1, vector<vector<int> > (2, vector<int>(3,-1)));
+//          vector< vector< vector<int> > > dp(prices.size() + 1, vector<vector<int> > (2, vector<int>(3,-1)));
         
         
         
-        return solve(0, 0, 0, prices, dp, 2);
+//         return solve(0, 0, 0, prices, dp, 2);
         
         return dpIterative(prices);
     }
