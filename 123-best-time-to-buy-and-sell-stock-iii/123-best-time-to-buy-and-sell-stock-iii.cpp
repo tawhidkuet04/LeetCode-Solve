@@ -30,22 +30,42 @@ public:
         
     }
     
+    int dpIterative(vector<int>& prices){
+         vector< vector< vector<int> > > dp(prices.size() + 2, vector<vector<int> > (2, vector<int>(4,0)));
+        
+
+
+        for(int index = prices.size() - 1 ; index >= 0 ; index -- ){
+            for(int buy = 0; buy < 2; buy ++ ){
+                for(int count = 1; count <= 2; count ++ ){
+                    int take = 0;
+                    if(buy){
+                        take = prices[index] + dp[index + 1][0][count - 1];
+                    }else{
+                        take = -prices[index] + dp[index + 1][1][count];
+                    }
+                    
+                    int notTake = dp[index + 1][buy][count];
+                    dp[index][buy][count] = max(take, notTake);
+                }
+            }
+        }
+        
+        return dp[0][1][2];
+        
+        
+        
+    }
+    
     int maxProfit(vector<int>& prices) {
         
-        vector< vector< vector<int> > > dp(prices.size(), vector<vector<int> > (2, vector<int>(2,-1)));
         
-        // int one = solve(0, 0, 0, prices, dp, 1);
-        // for(int index = 0; index < prices.size(); index ++){
-        //     for(int buy = 0; buy < 2; buy ++ ){
-        //         for(int count = 0; count < 2; count ++){
-        //             dp[index][buy][count] = -1;
-        //         }
-        //     }
-        // }
-        // int two = solve(0, 0, 0, prices, dp, 2);
-//         int ans = solve(0, 0, 0, prices, dp, 2);
+         vector< vector< vector<int> > > dp(prices.size() + 1, vector<vector<int> > (2, vector<int>(3,-1)));
         
-//         if( ans < 0){return 0;}
+        
+        
         return solve(0, 0, 0, prices, dp, 2);
+        
+        return dpIterative(prices);
     }
 };
