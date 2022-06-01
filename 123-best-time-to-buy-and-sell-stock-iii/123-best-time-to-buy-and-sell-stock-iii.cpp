@@ -10,7 +10,7 @@ public:
         
         if(index >= prices.size()){
               if(count <= limit) return 0;
-            else return -1e8;
+              else return -1e8;
         }
         
         if(dp[index][buy][count]  != -1) return dp[index][buy][count] ;
@@ -43,9 +43,9 @@ public:
         //     }
         // }
         // int two = solve(0, 0, 0, prices, dp, 2);
-        int ans = solve(0, 0, 0, prices, dp, 2);
+//         int ans = solve(0, 0, 0, prices, dp, 2);
         
-        if( ans < 0){return 0;}
-        return ans;
+//         if( ans < 0){return 0;}
+        return solve(0, 0, 0, prices, dp, 2);
     }
 };
