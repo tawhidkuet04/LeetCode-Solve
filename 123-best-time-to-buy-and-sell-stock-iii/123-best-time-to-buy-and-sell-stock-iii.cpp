@@ -37,7 +37,7 @@ public:
 
         for(int index = prices.size() - 1 ; index >= 0 ; index -- ){
             for(int buy = 0; buy < 2; buy ++ ){
-                for(int count = 2; count >= 0; count -- ){
+                for(int count = 2; count >= 1; count -- ){
                     int take = 0;
                     if(buy){
                         take = prices[index] + dp[index + 1][0][count + 1];
