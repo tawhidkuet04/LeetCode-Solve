@@ -1,6 +1,6 @@
 struct Node{
     Node *links[26];
-    vector<string> strList;
+    bool end = false;
     
     bool containsKey(char c){
         return links[c - 'a'];
@@ -14,21 +14,14 @@ struct Node{
         links[c - 'a'] = node;
     }
     
-    void insertProduct(string product){
-        if(strList.size() == 3){
-            strList.push_back(product);
-            sort(strList.begin(), strList.end());
-            strList.pop_back();
-        }else{
-            strList.push_back(product);
-            sort(strList.begin(), strList.end());
-        }
-        
+    void setEnd(){
+        this->end = true;
     }
     
-    vector<string> getProducts(){
-        return this->strList;
+    bool isEnd(){
+        return this->end;
     }
+    
     
 };
 
@@ -46,20 +39,23 @@ class Trie{
     
     void insertWord(string word){
         Node *node = root;
+        // cout << word << endl;
         
         for(int index = 0; index < word.size(); index ++ ){
             if(!node->containsKey(word[index])){
                 node->setKey(word[index], new Node());
             }
             node = node->get(word[index]);
-            node->insertProduct(word);
         }
+        node->setEnd();
     }
     
     vector<string> getProductList(string prefix){
         Node *node = root;
         
         vector<string> products;
+        
+        string str = prefix;
         
         for(int index = 0; index < prefix.size(); index ++ ){
             if(node->containsKey(prefix[index])){
@@ -69,10 +65,32 @@ class Trie{
             }
         }
         
-        products = node->getProducts();
-       
+        
+        dfs(node, str, products);
+        
         return products;
-    }  
+      
+        
+    
+    }
+    
+    
+    void dfs(Node *node, string str, vector<string> &products){
+        if(products.size() == 3) return ;
+        
+        if(node->isEnd()){
+            products.push_back(str);
+        }
+        
+        for(int index = 0; index < 26; index ++){
+            char ch = index + 'a';
+            
+            if(node->containsKey(ch)){
+                dfs(node->get(ch), str + ch, products);
+            }
+            
+        }
+    }
     
 };
 
