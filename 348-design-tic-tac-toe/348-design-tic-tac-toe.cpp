@@ -13,23 +13,20 @@ public:
     }
     
     int move(int row, int col, int player) {
-       rows[row] =  (player == 1) ? ( rows[row] + 1 ) : ( rows[row] -1);
-       cols[col] =  (player == 1) ? ( cols[col] + 1 ) : ( cols[col] -1);
+        int curPlayer = (player == 1) ? 1 : -1;
+       rows[row] += curPlayer;
+       cols[col] += curPlayer;
        
        if(row == col){
-           diagleft = (player == 1) ? (diagleft + 1 ) : ( diagleft - 1);
+           diagleft += curPlayer;
        }
         
        if( row + col == n - 1){
-            diagRight = (player == 1) ? (diagRight + 1 ) : ( diagRight - 1);
+            diagRight += curPlayer;
        }
         
-        // cout <<  n << endl;
-        if( rows[row] == n || cols[col] == n || diagleft == n || diagRight == n ){
-            return 1;
-        }else if( abs(rows[row]) == n || abs(cols[col]) == n || abs(diagleft) == n || abs(diagRight) == n) {
-            cout << rows[row] << endl;
-            return 2;
+        if( abs(rows[row]) == n || abs(cols[col]) == n || abs(diagleft) == n || abs(diagRight) == n) {
+            return player;
         }
         
         return 0;
