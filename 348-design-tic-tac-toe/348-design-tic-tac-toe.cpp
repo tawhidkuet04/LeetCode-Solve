@@ -1,38 +1,37 @@
 class TicTacToe {
 private:
-    int board[102][102];
-    int size;
+   int n;
+   vector<int> rows, cols;
+    int diagleft = 0;
+    int diagRight = 0;
     
 public:
     TicTacToe(int n) {
-        size = n;
+        rows.assign(n,0);
+        cols.assign(n,0);
+        this->n = n;
     }
     
     int move(int row, int col, int player) {
-        board[row][col] = player;
+       rows[row] =  (player == 1) ? ( rows[row] + 1 ) : ( rows[row] -1);
+       cols[col] =  (player == 1) ? ( cols[col] + 1 ) : ( cols[col] -1);
+       
+       if(row == col){
+           diagleft = (player == 1) ? (diagleft + 1 ) : ( diagleft - 1);
+       }
         
-        int colCount = 0, rowCount = 0, diagLeft = 0, diagRight = 0;
+       if( row + col == n - 1){
+            diagRight = (player == 1) ? (diagRight + 1 ) : ( diagRight - 1);
+       }
         
-        int diagRowUp = 0, diagRowDown = size - 1;
-        for(int index = 0; index < size; index ++ ){
-            if(board[row][index] == player){
-                colCount ++ ;
-            }
-            
-             if(board[index][col] == player){
-                rowCount ++ ;
-            }
-            if(board[diagRowUp++][index] == player){
-                diagLeft ++ ;
-            }
-             if(board[diagRowDown--][index] == player){
-                diagRight ++ ;
-            }
+        // cout <<  n << endl;
+        if( rows[row] == n || cols[col] == n || diagleft == n || diagRight == n ){
+            return 1;
+        }else if( abs(rows[row]) == n || abs(cols[col]) == n || abs(diagleft) == n || abs(diagRight) == n) {
+            cout << rows[row] << endl;
+            return 2;
         }
         
-        if(colCount == size || rowCount == size || diagLeft == size || diagRight == size ){
-            return player;
-        }
         return 0;
     }
 };
