@@ -15,7 +15,15 @@ struct Node{
     }
     
     void insertProduct(string product){
-        strList.push_back(product);
+        if(strList.size() == 3){
+            strList.push_back(product);
+            sort(strList.begin(), strList.end());
+            strList.pop_back();
+        }else{
+            strList.push_back(product);
+            sort(strList.begin(), strList.end());
+        }
+        
     }
     
     vector<string> getProducts(){
@@ -62,24 +70,8 @@ class Trie{
         }
         
         products = node->getProducts();
-        
-        sort(products.begin(), products.end());
-        
-        vector<string> filteredProducts;
-        
-        if(products.size() > 3){
-            for(int index = 0; index < 3; index ++ ){
-               filteredProducts.push_back(products[index]);
-            }
-             return filteredProducts;
-        }else{
-            return products;
-        }
-        
-        
-        
        
-        
+        return products;
     }  
     
 };
