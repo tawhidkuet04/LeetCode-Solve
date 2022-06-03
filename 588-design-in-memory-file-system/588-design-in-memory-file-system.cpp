@@ -41,6 +41,16 @@ class Trie{
     private: 
       Node *root;
     
+      vector<string> splitByDelimeter(string path){
+          stringstream ss(path);
+          string token;
+          vector<string> splitedPath;
+          while(getline(ss, token,'/')){
+              splitedPath.push_back(token);
+          }
+          return splitedPath;
+      }
+    
     public:
     
       Trie(){
@@ -49,25 +59,15 @@ class Trie{
     
       Node *createPath(string path){
           Node *node = root;
-          string dir = "";
+          auto splitedPath = this->splitByDelimeter(path);
           
-          
-          for(int index = 0; index < path.size(); index ++ ){
-              if(path[index] != '/'){
-                  dir += path[index];
-              }else{
+          for(int index = 1; index < splitedPath.size(); index ++ ){
+                 string dir = splitedPath[index];
                   if(!node->containsKey(dir)){
                       node->setKey(dir, new Node());
                   }
                   node = node->get(dir);
-                  dir = "";
               }
-              
-          }
-          if(dir != "" && !node->containsKey(dir)){
-                      node->setKey(dir, new Node());
-                  }
-                  node = node->get(dir);
           return node;
       }
     
@@ -84,60 +84,34 @@ class Trie{
     string readFile(string path){
           Node *node = root;
           
-          string dir = "";
-          
-          
-          for(int index = 0; index < path.size(); index ++ ){
-              if(path[index] != '/'){
-                  dir += path[index];
-              }else{
+          auto splitedPath = this->splitByDelimeter(path);
+        
+          for(int index = 1; index < splitedPath.size(); index ++ ){
+              string dir = splitedPath[index];
                   if(node->containsKey(dir)){
                      node = node->get(dir);
                   }
-                  dir = "";
-              }
           }
-            if(dir != "" && node->containsKey(dir)){
-                      node = node->get(dir);
-                  }
-                
-        
-        
-        
         return node->getContent();
     }
     
     vector<string> getListPath(string path){
         Node *node = root;
-          
-         string dir = "";
          vector<string> paths;
-          for(int index = 0; index < path.size(); index ++ ){
-              if(path[index] != '/'){
-                  dir += path[index];
-              }else{
+        auto splitedPath = this->splitByDelimeter(path);
+          for(int index = 1; index < splitedPath.size(); index ++ ){
+              string dir = splitedPath[index];
                   if(node->containsKey(dir)){
                      node = node->get(dir);
                   }
-                  
-                 
-                  dir = "";
-              }
           }
         
-        
-        
-        if(dir != "" && node->containsKey(dir)){
-              node = node->get(dir);
-         }
-        
         if(node->isItFile()){
-                       paths.push_back(dir);
-                       return paths;
-                  }
-        
+           paths.push_back(splitedPath[splitedPath.size() - 1]);
+             return paths;
+        }
+      
         for( auto &key: node->links){
-            // cout << key.first << endl;
             if(key.first != ""){
                 paths.push_back(key.first);
             }
