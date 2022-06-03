@@ -9,30 +9,27 @@ public:
              st.push_back(asteroids[index]);
             
              while(st.size() >= 2){
-                 int firstTop = st.back();
+                 int right = st.back();
                  st.pop_back();
-                 int secondTop = st.back();
+                 int left = st.back();
                  st.pop_back();
                  
-                 int collision = firstTop * secondTop;
+                 int collision = right * left;
                  
                  if(collision < 0){
-                     if(secondTop > 0 ){
-                     if(abs(firstTop) >  abs(secondTop)){
-                         st.push_back(firstTop);
-                     }else if(abs(firstTop) <  abs(secondTop)){
-                             st.push_back(secondTop);
+                     if(left > 0 ){
+                     if(abs(right) >  abs(left)){
+                         st.push_back(right);
+                     }else if(abs(right) <  abs(left)){
+                             st.push_back(left);
                       }
                      }else{
-                         st.push_back(secondTop);
-                         st.push_back(firstTop);
+                         st.insert(st.end(),{left,right});
                          break;
                      }
                     
                  }else{
-                    
-                     st.push_back(secondTop);
-                     st.push_back(firstTop);
+                    st.insert(st.end(),{left,right});
                      break;
                  }
              }
