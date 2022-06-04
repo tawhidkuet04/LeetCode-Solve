@@ -33,7 +33,7 @@ public:
     }
     
     
-    void createPattern( unordered_map<string, map<int, string> >  &mp, map<string, int > &patternCountMp, int &maxCount){
+    void createPattern( unordered_map<string, map<int, string> >  &mp, unordered_map<string, int > &patternCountMp, int &maxCount){
         
         for(auto userPattern: mp){
             auto userPatternList = userPattern.second;
@@ -67,26 +67,30 @@ public:
         }
         
         
-        map<string, int > patternCountMp;
+        unordered_map<string, int > patternCountMp;
         int maxCount = 0;
         
         createPattern(mp, patternCountMp, maxCount);
         
         string maxHash = "";
         
+        cout << maxCount << endl;
+        
         for(auto &keyVal: patternCountMp){
-            // cout << keyVal.first << " "<< keyVal.second << endl;
-            // if(maxHash.size() == 0){
-            //     maxHash =  keyVal.first;
-            // }
-            // else if(keyVal.second == maxCount){
-            //     // maxHash = min(maxHash, keyVal.first);
-            // }
+            
+            
             
             if(keyVal.second == maxCount){
-                maxHash = keyVal.first;
-                break;
+                if(maxHash == ""){
+                     maxHash =  keyVal.first;
+                 }
+                maxHash = min(maxHash, keyVal.first);
             }
+            
+            // if(keyVal.second == maxCount){
+            //     maxHash = keyVal.first;
+            //     break;
+            // }
         }
         
         vector<string> ans;
