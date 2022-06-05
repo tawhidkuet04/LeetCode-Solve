@@ -33,21 +33,26 @@ public:
     }
     
     
-    void getPath(TreeNode *root, int target, string &path, string &orgPath){
+    bool getPath(TreeNode *root, int target, string &path){
         if(root == NULL){
-            return;
+            return false;
         }
         if(root->val == target){
-            orgPath = path;
-            return;
+            return true;
         }
         
         path += 'L';
-        getPath(root->left , target, path, orgPath);
+        if(getPath(root->left , target, path)){
+            return true;
+        }
         path.pop_back();
         path += 'R';
-        getPath(root->right , target, path, orgPath);
+        if(getPath(root->right , target, path)){
+            return true;
+        }
         path.pop_back();
+        
+        return false;
     }
     
     string getDirections(TreeNode* root, int startValue, int destValue) {
@@ -56,30 +61,15 @@ public:
         
         
         
-        string leftPath = "", rightPath = "", path = "";
+        string leftPath = "", rightPath = "";
         
-        if(lca->val == startValue){
-            getPath(lca, destValue, path, leftPath);
-            return leftPath;
-        }else  if(lca->val == destValue){
-            getPath(lca, startValue, path,leftPath);
-            for(int index = 0; index < leftPath.size(); index ++ ){
+         getPath(lca, startValue, leftPath);
+         for(int index = 0; index < leftPath.size(); index ++ ){
                 leftPath[index] = 'U';
-            }
-            return leftPath;
-        }else{
-           getPath(lca, startValue,path, leftPath);
-            path = "";
+         }
+         getPath(lca, destValue,rightPath);
 
-             getPath(lca, destValue, path,rightPath);
-            
-            for(int index = 0; index < leftPath.size(); index ++ ){
-                leftPath[index] = 'U';
-            }
-            
-            return leftPath + rightPath; 
-        }
-        
+         return leftPath + rightPath; 
         
     }
 };
