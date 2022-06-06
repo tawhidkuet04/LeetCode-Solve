@@ -17,7 +17,6 @@ public:
                 curVal = curVal * 10 + (s[index] - '0');
             }
             
-             cout << s << " " << index << endl;
             int cnt = 0;
             if(s[index] == '('){
                 index ++;
@@ -28,7 +27,6 @@ public:
                     else if(s[index] == ')') cnt --;
                     if(cnt == 0) break;
                     bracketExpression += s[index];
-                   
                     index ++;
                 }
                 
@@ -62,7 +60,6 @@ public:
         
         while(!st.empty()){
             ans += st.top();
-            // cout << s << " "<<st.top() << endl;
             st.pop();
         }
         
