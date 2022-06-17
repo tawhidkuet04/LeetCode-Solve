@@ -13,8 +13,8 @@ struct Node{
 class Solution {
 public:
     
-    bool isValid(int newRow, int newCol, vector<vector<int>>& grid,  vector< vector<int> > &vis){
-        if(newRow >= 0 && newRow < grid.size() && newCol >= 0 && newCol < grid[0].size() && grid[newRow][newCol] == 0 && vis[newRow][newCol] == 0){
+    bool isValid(int newRow, int newCol, vector<vector<int>>& grid){
+        if(newRow >= 0 && newRow < grid.size() && newCol >= 0 && newCol < grid[0].size() && grid[newRow][newCol] == 0){
             return true;
         }
         
@@ -33,10 +33,6 @@ public:
         int rowSize = grid.size();
         int colSize = grid[0].size();
         
-        vector< vector<int> > vis(rowSize, vector<int>(colSize, 0));
-        
-        vis[0][0] = 1;
-        
         int fx[8] = {+1,-1,0,0    ,+1, - 1, -1, +1};
         int fy[8] = {0, 0 , +1, -1,+1, + 1, -1, -1};
         
@@ -53,9 +49,9 @@ public:
                 int newRow = front.x + fx[index];
                 int newCol = front.y + fy[index];
                  
-                if(isValid(newRow, newCol, grid, vis)){
+                if(isValid(newRow, newCol, grid)){
                     cout << newRow << " " << newCol << endl;
-                    vis[newRow][newCol] = 1;
+                    grid[newRow][newCol] = 2;
                     q.push({newRow, newCol, front.dis + 1});
                 }
             }
