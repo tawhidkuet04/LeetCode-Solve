@@ -20,20 +20,19 @@ public:
             return 1;
         }
         
-        int dis[100005] = {100000};
+        
         
         unordered_set<int> des;
         
         int newSource;
         
         
-        queue<int> q;
+        queue< pair<int,int> > q;
        
         
         for(auto bus: st[source]){
-             q.push(bus);
+             q.push({bus,1});
              vis[bus] = 1;
-             dis[bus] = 1;
         }
         
         for(auto bus: st[target]){
@@ -43,20 +42,17 @@ public:
         int minStep = 1;
         
         while(!q.empty()){
-            int node = q.front();
+            pair<int,int>  node = q.front();
             q.pop();
             
-            if(des.find(node) != des.end()){
-                return dis[node];
+            if(des.find(node.first) != des.end()){
+                return node.second;
             }
             
-            for(int index = 0; index < graph[node].size(); index ++ ){
-                  int nextNode = graph[node][index];
-                
-        
+            for(int index = 0; index < graph[node.first].size(); index ++ ){
+                  int nextNode = graph[node.first][index];
                   if( !vis[nextNode]){
-                      q.push(nextNode);
-                      dis[nextNode] = dis[node] + 1;
+                      q.push({nextNode, node.second + 1});
                       vis[nextNode] = 1;
                   }
             }
