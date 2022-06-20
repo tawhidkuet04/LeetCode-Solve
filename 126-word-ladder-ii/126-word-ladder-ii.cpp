@@ -29,18 +29,16 @@ public:
                                 
                                 if(lev[newString] == 0){
                                     q.push(newString);
-                                     par[newString].push_back(front);
-                                    lev[newString] = lev[front] + 1;
-                                     
-                                    
+                                    par[newString].push_back(front);
+                                    lev[newString] = lev[front] + 1;        
                                 }else if (lev[newString] == lev[front] + 1){
                                      par[newString].push_back(front);
                                 }
                                
                                 
                                 if(newString == endWord){
-                                    // comeToEnd = true;
-                                    // break;
+                                    comeToEnd = true;
+                                    break;
                                 }
                             }
                         }
