@@ -1,55 +1,115 @@
+struct Node{
+    Node *links[26];
+    int endCount = 0;
+    int count = 0;
+    int length = 0;
+
+    
+    bool containsKey(char c){
+        return links[c - 'a'] != NULL;
+    }
+    
+    void setKey(char c, Node *newNode){
+        links[c - 'a'] = newNode;
+    }
+    
+    Node *get(char c){
+        return links[c - 'a'];
+    }
+    
+    void setEndCount(){
+        endCount ++ ;
+    }
+    
+    int getEndCount(){
+        return endCount;
+    }
+    
+     void setCount(){
+        count ++ ;
+    }
+    
+    int getCount(){
+        return count;
+    }
+    
+    void setLength(int len){
+        length = len;
+    }
+    
+    int getLength(){
+        return length;
+    }
+};
+
+class Trie{
+    private:
+      
+       Node *root;
+    
+    public:
+    
+       Trie(){
+           root = new Node();
+       }
+    
+     void insertWord(string word){
+         Node *node = root;         
+         for(int index = 0; index < word.size(); index ++ ){
+             if(!node->containsKey(word[index])){
+                 node->setKey(word[index], new Node());
+             
+             }
+             node = node->get(word[index]);
+             node->setCount();
+         }
+         node->setEndCount();
+        
+         node->setLength(word.size());
+     }
+    
+    void getWord(Node *node, int &length, int &count){
+        if(node->getEndCount() == 1 && node->getCount() == 1){
+            length += node->getLength();
+            count ++;
+            return ;
+        }
+   
+        for(char ch = 'a'; ch <= 'z'; ch ++ ){
+            if(node->containsKey(ch)){
+                getWord(node->get(ch), length, count);
+            }
+        }
+    }
+    
+    
+    int getTotalWords(){
+        Node *node = root;
+        int length = 0, count = 0;
+        getWord(node, length, count);
+        cout << length << endl;
+        return length + count;
+    }
+  
+};
+
+
 class Solution {
 public:
     
-    bool isSubstring(string &a, string &b){
-        int i = a.size() - 1, j = b.size() - 1;
-        
-        while( j >= 0 && i >= 0){
-            if(a[i] == b[j]){
-                i --; 
-                j -- ;
-            }else{
-                return false;
-            }
-        }
-        
-        if( i < 0) return true;
-        else return false;
-        
-        
-    }
+    
+    
     int minimumLengthEncoding(vector<string>& words) {
-        unordered_map<string, int > mp;
-        vector< pair<int, string> > arr;
+        Trie *trie = new Trie();
+        unordered_map<string, int> mp;
         for(auto &word: words){
-            mp[word] ++ ;
-            arr.push_back({word.size(), word});
+            if(mp[word]) continue;
+            mp[word] ++;
+            reverse(word.begin(), word.end());
+            trie->insertWord(word);
         }
         
-        sort(arr.begin(), arr.end());
-        
-        for(int i = 0; i < arr.size(); i ++ ){
-            for(int j = i + 1; j < arr.size(); j ++ ){
-                if(isSubstring(arr[i].second, arr[j].second)){
-                    mp[arr[i].second] -- ;
-                    break;
-                }
-            }
-        }
-        
-        int ans = 0, count = 0;
-        for( auto keyVal: mp){
-            if(keyVal.second > 0){
-                ans += keyVal.first.size();
-                count ++ ;
-            }
-        }
-        
-        
-        return ans + count;
-       
-        
-        
+        return trie->getTotalWords();
     }
 };
 
