@@ -2,30 +2,34 @@
 class FreqStack {
     
 private:
-    map< int , vector<int> > mp;
+    unordered_map< int , vector<int> > mp;
     unordered_map<int, int> priorityMp;
-    map< int , vector<int> > :: reverse_iterator it;
+    int maxElement =0;
 public:
     
     FreqStack() {
+        maxElement = 0;
     }
     
     void push(int val) {
         priorityMp[val] ++ ;
+        if(priorityMp[val] > maxElement){
+           maxElement= priorityMp[val];
+        }
         mp[priorityMp[val]].push_back(val);
     }
     
     int pop() {
-        it = mp.rbegin();
-        auto vec = it->second;
-        int top = vec.back();
-        it->second.pop_back();
-        
-        if(it->second.size() == 0){
-            mp.erase(mp.find(it->first));
+        auto vec = mp[maxElement];
+        int topFreq = vec.back();
+        mp[maxElement].pop_back();
+        if(mp[maxElement].size() == 0){
+             maxElement--;
         }
-        priorityMp[top] --;
-        return top;
+        priorityMp[topFreq] --;
+       
+        
+        return topFreq;
         
     }
 };
