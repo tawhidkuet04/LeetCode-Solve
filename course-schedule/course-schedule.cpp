@@ -5,13 +5,12 @@ public:
         
         
         vis[node] = 1;
-        
+        bool flag = true;
         for(int index = 0; index < graph[node].size(); index ++ ){
             int nextNode = graph[node][index];
             if(vis[nextNode] == 0){
-                if(dfs(nextNode, graph, vis, ans)){
-                    return true ;
-                }
+               
+                if(dfs(nextNode, graph, vis, ans)) return true;
                 
             }else if(vis[nextNode] == 1){
                 return true;
@@ -32,8 +31,6 @@ public:
         for(int index = 0; index < prerequisites.size(); index ++ ){
             int first = prerequisites[index][0];
             int second = prerequisites[index][1];
-            // cout << first << " " << second << endl;
-            
             graph[second].push_back(first);
 
         }
@@ -43,7 +40,6 @@ public:
         for(int index = 0; index < numCourses; index ++){
             if(vis[index] == 0){
                 bool flag = dfs(index, graph, vis, ans);
-                cout << index << " "<< flag << endl;
                 if(flag){
                     return false;
                 }
