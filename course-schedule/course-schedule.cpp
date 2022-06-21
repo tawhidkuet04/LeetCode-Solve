@@ -1,23 +1,25 @@
 class Solution {
 public:
     
-    void dfs(int node, vector< vector< int> > &graph, vector< int > &vis, bool &ans){
+    bool dfs(int node, vector< vector< int> > &graph, vector< int > &vis, bool &ans){
         
         
         vis[node] = 1;
-        cout << graph[node].size() << endl;
+        
         for(int index = 0; index < graph[node].size(); index ++ ){
             int nextNode = graph[node][index];
             if(vis[nextNode] == 0){
-                 dfs(nextNode, graph, vis, ans);
+                if(dfs(nextNode, graph, vis, ans)){
+                    return true ;
+                }
+                
             }else if(vis[nextNode] == 1){
-                ans = false;
-                // return false;
+                return true;
             }
         }
         vis[node] = 2;
 
-        // return true;
+        return false;
     }
     
     
@@ -40,14 +42,14 @@ public:
 
         for(int index = 0; index < numCourses; index ++){
             if(vis[index] == 0){
-                 dfs(index, graph, vis, ans);
-                // cout << index << " "<< flag << endl;
-                // if(!flag){
-                //     return false;
-                // }
+                bool flag = dfs(index, graph, vis, ans);
+                cout << index << " "<< flag << endl;
+                if(flag){
+                    return false;
+                }
             }
         }
-        return ans;
+        return true;
         
 //         [[1,4],[2,4],[3,1],[3,2]]
         
