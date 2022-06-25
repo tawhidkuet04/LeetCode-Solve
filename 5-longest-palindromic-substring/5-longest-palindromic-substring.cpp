@@ -1,49 +1,63 @@
 class Solution {
 public:
     string longestPalindrome(string s) {
-       int sz = s.size();
-       vector< vector<int> >dp(sz + 10, vector<int> (sz + 10, 0 ));
-       int mx = 1, startIndex = 0;
-        
-       if(s.size() == 1) return s;
-       for(int index = 0; index < sz - 1; index ++ ){
-            dp[index][index] = 1;
-            if(s[index] == s[index + 1]){
-                dp[index][index + 1] = 1;
-                mx = 2;
-                startIndex = index;
-             }
-        }
-        
-
-        
-       
-        for(int length = 2; length < sz; length ++ ){
-            for(int start = 0 ; start < sz; start ++ ){
-                 int end = start + length;
-                 if(end < sz){
-                     if(s[start] == s[end] && dp[start + 1][end - 1] == 1){
-                      if( (length + 1) > mx){
-                          mx = length + 1;
-                          startIndex = start;
-                      }
-                       dp[start][end] = 1;
-                    }
-                
-                 }
-                  
-                
+        int sz = s.size();
+        int plStart = -1, plEnd  = -1, mx = 0;
+        for(int index = 0; index < sz; index ++){
+            int start = -1, end = -1;
+            
+            getPalindromeFromThisIndex(s, index - 1, index + 1, start, end);
+            
+            if(start != -1){
+                if(end - start + 1 > mx){
+                    mx = end - start + 1;
+                    plStart = start;
+                    plEnd = end;
+                }
             }
+            
+            start = -1, end = -1;
+            
+            getPalindromeFromThisIndex(s, index, index + 1, start, end);
+            
+          
+            
+            if(start != -1){
+                if(end - start + 1 > mx){
+                    mx = end - start + 1;
+                    plStart = start;
+                    plEnd = end;
+                }
+            }
+            
+            
         }
+       
         
-        cout << startIndex << " " << mx << endl;
         string ans = "";
-        for(int start = startIndex; start < startIndex + mx; start ++ ){
-            ans += s[start];
-        }
+        
+         if(plStart == -1) {
+             ans += s[0];
+             return ans;
+         }
+        
+        for(int index = plStart; index <= plEnd; index ++ ) ans += s[index];
         
         return ans;
         
+        
+    }
+    
+    void getPalindromeFromThisIndex(string &s, int startIndex, int endIndex, int &start, int &end){
+        while(startIndex >= 0 && endIndex < s.size()){
+            if(s[startIndex] != s[endIndex]){
+                return;
+            }else{
+                start = startIndex;
+                end = endIndex;
+            }
+            startIndex -- ;
+            endIndex ++; 
+        }
     }
 };
-
