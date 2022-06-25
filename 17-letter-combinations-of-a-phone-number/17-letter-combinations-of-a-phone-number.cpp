@@ -1,35 +1,34 @@
 class Solution {
 public:
-   
     
-    void generateLetters(int index, vector<string> &ans, string combination, string digits,
-                        string mapping[]){
-        
-        if(index >= digits.size()){
-            ans.push_back(combination);
+    string pad[10] = {"", "", "abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    
+    
+    void solve(int index, string &digits, string &comb, vector<string> &ans){
+        if(index == digits.size()) {
+            ans.push_back(comb);
             return;
         }
         
+        string group = pad[digits[index] - '0'];
         
-        int number = (digits[index] - '0');
-        string value = mapping[number];
-        for(int start = 0 ; start < value.size(); start ++ ){
-            combination += value[start];
-            generateLetters(index + 1, ans, combination, digits, mapping);
-            combination.pop_back();
+        for(int start = 0; start < group.size(); start ++ ){
+            comb += group[start];
+            solve(index + 1, digits, comb , ans);
+            comb.pop_back();
         }
     }
     
+    
     vector<string> letterCombinations(string digits) {
-        vector<string> ans;
-        if(digits.size() == 0){
-            return ans;
-        }
+         vector<string> ans;
+         if(digits.size() == 0) return ans;
+         string comb = "";
+         solve(0, digits, comb, ans);
+         
+         return ans;
         
-         string mapping[10] = {"", "","abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-        generateLetters(0, ans, "", digits, mapping);
         
-       
-        return ans;
+        
     }
 };
