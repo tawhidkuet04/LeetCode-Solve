@@ -1,163 +1,141 @@
 struct Node{
-    public:
-    int key;
-    int data;
-    Node *left;
-    Node *right;
+  int key;
+  int val;
+  Node *left;
+  Node *right;
     
-    Node(int data){
-        this->data = data;
+   Node(int data){
+        this->val = data;
         this->left = NULL;
         this->right = NULL;
     }
+  Node(int key, int val , Node *left, Node *right){
+      this->key = key;
+      this->val = val;
+      this->left = left;
+      this->right = right;
+  }    
 };
 
 
 class DoublyList{
-    
-    public:
+  private:
     Node *head, *tail;
+    int size;
     
-    
-
-    int getData(Node *cur){
-        return cur->data;
-    }
-    
+  public:
     DoublyList(){
         head = new Node(-1);
         tail = new Node(-1);
         head->right = tail;
         tail->left = head;
+        size = 0;
     }
     
+    int getSize(){
+        return size;
+    }
     
-    void insertAtHead(Node *data){
-        
+    void insertAtHead(Node *node){
         Node *next = head->right;
+        head->right = node;
+        node->left = head;
         
-        head->right = data;
-        data->left = head;
-        
-        next->left = data;
-        data->right = next;
-    }
-    
-//     void insertAtTail(int data){
-//         Node *prev = tail->left;
-        
-//         Node *newNode = new Node(data);
-//         prev->right = newNode;
-//         newNode->left = prev;
-        
-//         newNode->right = tail;
-//         tail->left = newNode;
-//     }
-    
-    void insert(Node *cur, int data, int key){
-        Node *newNode =  new Node(data);
-        newNode->key = key;
-        Node *nextNode = cur->right;
-        
-        cur->right = newNode;
-        newNode->left = cur;
-        
-        newNode->right = nextNode;
-        nextNode->left = newNode;
-        
-    }
-    
-    void remove(Node *cur){
-        Node *prev = cur->left;
-        Node *next = cur->right;
-        
-        prev->right = next;
-        next->left = prev;
+        node->right = next;
+        next->left = node;
+        size ++ ;
     }
     
     
-    void print(){
-//         Node *temp = head->right;
-        
-//         while(temp->data != -1){
-//             cout << temp->data << " ";
-//             temp = temp->right;
-//         }
-//         cout << endl;
+    void removeTailNode(){
+        this->removeNode(tail->left);
     }
     
+    int getTailNodeKey(){
+        return tail->left->key;
+    }
+    
+    void removeNode(Node *node){
+          
+         
+         Node *prev = node->left;
+         Node *next = node->right;
+        
+         prev->right = next;
+         next->left = prev;
+        
+         size -- ;
+         
+     
+    } 
 };
-    
-    
+
+
+
 class LRUCache {
+private:
+    int cacheCapacty;
+    unordered_map<int, Node*> mp;
+    DoublyList *list;
+    
 public:
-    int capacity;
-    int curSize;
-    
-    DoublyList list;
-    unordered_map<int, Node* > mp;
-    
-    
     LRUCache(int capacity) {
-        this->capacity = capacity;
-        list = DoublyList();
-        curSize = 0;
+        
+        cacheCapacty = capacity;
+        list = new DoublyList();
     }
     
     int get(int key) {
-        if(mp.find(key) == mp.end()){
+        
+        // cout << key << endl;
+        if(mp[key] != NULL){
+            Node *node = mp[key];
+            list->removeNode(node);   
+            list->insertAtHead(mp[key]);
+            return mp[key]->val;
+        }else{
             return -1;
         }
-        Node *node = mp[key];
-        
-        // cout << node->data << endl;
-        
-        list.remove(node);
-        list.insertAtHead(node);
-        
-       
-        return list.getData(node);
     }
     
     void put(int key, int value) {
-        // cout << "size" <<" "<<curSize << " " << capacity << endl;
-        
-        
-        if(mp.find(key) != mp.end()){
-            list.remove(mp[key]);
-            Node *newNode = new Node(value);
-            newNode-> key = key;
-            
-            mp.erase(key);
-            list.insertAtHead(newNode);
-            mp[key] = newNode;
-            list.print();
-            return;
-        }
-        
-        
-        if(curSize  == capacity){
-            mp.erase(list.tail->left->key);
-            list.remove(list.tail->left);
+        // cout << key << " " << value << endl;
+        // cout << list->getSize() << endl;
+        if(list->getSize() < cacheCapacty){
+                if(mp[key] != NULL){
+                    Node *node = mp[key];
+                    list->removeNode(node); 
+                    mp[key]->val = value;
+                    list->insertAtHead(mp[key]);
+                    return;
+                }
+        }else{
+            if(mp[key] != NULL){
+                Node *node = mp[key];
+                list->removeNode(node);  
+                mp[key]->val = value;
+                list->insertAtHead(mp[key]);
+                return;
+                
+            }else{
+                mp[list->getTailNodeKey()] = NULL;
+                list->removeTailNode();
+               
+
+            }
             
            
-            cout <<  list.tail->left->key << endl;
-            // cout <<  list.tail->left->key <<endl;
-            curSize --;
         }
-         
-         // list.print();
         
-        Node *data = new Node(value);
-        data->key = key;
-        list.insertAtHead(data);
-        mp[key] = data;
-        curSize ++;
-        
-        // list.print();
+        insertNode(key, value);
+    }
+    
+    void insertNode(int key, int value){
+        Node *newNode = new Node(key, value, NULL, NULL);
+          list->insertAtHead(newNode);
+          mp[key] = newNode;
     }
 };
-
 
 /**
  * Your LRUCache object will be instantiated and called as such:
@@ -165,7 +143,3 @@ public:
  * int param_1 = obj->get(key);
  * obj->put(key,value);
  */
-
-  // 3 4 5 3 4 3 4 
-    
-    
