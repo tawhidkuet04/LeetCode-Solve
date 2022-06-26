@@ -86,49 +86,44 @@ public:
     }
     
     int get(int key) {
-        
-        // cout << key << endl;
         if(mp[key] != NULL){
-            Node *node = mp[key];
-            list->removeNode(node);   
-            list->insertAtHead(mp[key]);
+            updateNode(key);
             return mp[key]->val;
         }else{
             return -1;
         }
     }
     
+    
     void put(int key, int value) {
-        // cout << key << " " << value << endl;
-        // cout << list->getSize() << endl;
         if(list->getSize() < cacheCapacty){
                 if(mp[key] != NULL){
-                    Node *node = mp[key];
-                    list->removeNode(node); 
+                    updateNode(key); 
                     mp[key]->val = value;
-                    list->insertAtHead(mp[key]);
                     return;
                 }
         }else{
             if(mp[key] != NULL){
-                Node *node = mp[key];
-                list->removeNode(node);  
+                updateNode(key);  
                 mp[key]->val = value;
-                list->insertAtHead(mp[key]);
                 return;
                 
             }else{
                 mp[list->getTailNodeKey()] = NULL;
                 list->removeTailNode();
-               
 
             }
-            
-           
+  
         }
         
         insertNode(key, value);
     }
+    void updateNode(int key){
+         Node *node = mp[key];
+         list->removeNode(node);   
+         list->insertAtHead(mp[key]);
+    }
+    
     
     void insertNode(int key, int value){
         Node *newNode = new Node(key, value, NULL, NULL);
