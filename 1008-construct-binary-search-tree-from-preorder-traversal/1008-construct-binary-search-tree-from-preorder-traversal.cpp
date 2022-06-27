@@ -12,32 +12,23 @@
 class Solution {
 public:
     
-    TreeNode* build(TreeNode *root, int val){
-        if(root == NULL){
-            return new TreeNode(val);
-        }
+    TreeNode* build(vector<int>& preorder,
+                    int &index, int  upperBound){
         
-        if(val > root->val){
-            root->right = build(root->right, val);
-        }else{
-            root->left = build(root->left, val);
-        }
+        if(index >= preorder.size()) return NULL;
+        if(preorder[index] > upperBound) return NULL;
         
-        return root;
+        int val = preorder[index];
+        TreeNode *node = new TreeNode(preorder[index++]);
+        node->left = build(preorder, index, val );
+        node->right = build(preorder, index ,upperBound);
+        
+        return node;
     }
     
     TreeNode* bstFromPreorder(vector<int>& preorder) {
-       TreeNode *root = NULL;
-        
-       for(int index = 0; index < preorder.size(); index ++ ){
-           if(index == 0){
-               root = build(root, preorder[index]);
-           }else{
-               build(root, preorder[index]);
-           }
-           
-       }
-        return root;
+        int index = 0;
+       return build(preorder, index, INT_MAX);
         
     }
 };
