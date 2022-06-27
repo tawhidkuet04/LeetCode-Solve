@@ -4,7 +4,7 @@ public:
     int getRotatedIndex(int lo, int hi, vector<int>& nums){
         while(lo < hi){
             int mid = (lo + hi )/2;
-            cout << lo << " " << hi << endl;
+            
             if(lo == mid){
                  break;
             }
@@ -48,5 +48,3 @@ public:
     }
 };
 
-
-// 6,7,8, 9, 19, 0 ,1,2,3, 4, 5
