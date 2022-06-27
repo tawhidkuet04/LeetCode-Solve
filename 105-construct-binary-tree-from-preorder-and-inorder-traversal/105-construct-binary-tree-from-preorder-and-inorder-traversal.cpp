@@ -13,16 +13,16 @@ class Solution {
 public:
      unordered_map<int,int> mp ;
     
-    TreeNode* constructTree(int *ind , int l , int r,vector<int>& inorder, vector<int>& preorder){
+    TreeNode* constructTree(int &ind , int l , int r,vector<int>& inorder, vector<int>& preorder){
         
         if( l > r){
             return NULL;
         }
         
-        TreeNode *newNode = new TreeNode(preorder[*ind]);
-        int val = preorder[*ind] ;
+        TreeNode *newNode = new TreeNode(preorder[ind]);
+        int val = preorder[ind] ;
         int in = mp[val];
-        (*ind)++;
+        ind ++;
         newNode->left = constructTree( ind ,l , in-1,inorder,preorder);
         newNode->right = constructTree(  ind, in +1 , r ,inorder,preorder);
         return newNode;
@@ -34,6 +34,6 @@ public:
             mp[inorder[i]] = i ;
         }
         int ind = 0 ;
-        return constructTree( &ind,0,inLength-1,inorder,preorder);
+        return constructTree( ind,0,inLength-1,inorder,preorder);
     }
 };
