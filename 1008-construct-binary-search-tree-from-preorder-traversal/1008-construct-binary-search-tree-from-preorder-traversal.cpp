@@ -30,7 +30,12 @@ public:
        TreeNode *root = NULL;
         
        for(int index = 0; index < preorder.size(); index ++ ){
-           root = build(root, preorder[index]);
+           if(index == 0){
+               root = build(root, preorder[index]);
+           }else{
+               build(root, preorder[index]);
+           }
+           
        }
         return root;
         
