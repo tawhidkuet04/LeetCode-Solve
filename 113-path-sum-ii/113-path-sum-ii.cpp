@@ -38,9 +38,7 @@ public:
     
     vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
         vector<vector<int>>  ans;
-        if(root == NULL){
-            return ans;
-        }
+
          solve(root, 0, targetSum, vector<int>(), ans);
         
         return ans;
