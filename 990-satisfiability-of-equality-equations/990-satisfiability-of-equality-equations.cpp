@@ -39,12 +39,9 @@ public:
             
             
     bool equationsPossible(vector<string>& equations) {
-       
-        
+              
         vector< pair<char,char> > arr;
-        
-        
-        
+    
         for(int index = 0; index < equations.size(); index ++ ){
              auto pairChar = parseString(equations[index]);
             
@@ -56,8 +53,7 @@ public:
                 graph[nodeA].push_back(nodeB);
                 graph[nodeB].push_back(nodeA);
                 
-                // cout << nodeA << " "<< nodeB << endl;
-                
+
             }else{
                 arr.push_back(pairChar);
             }
@@ -73,9 +69,7 @@ public:
                   clearVisArr();
                  if(isPresent(index,nodeA)){
                       clearVisArr();
-                     cout << (char)(index + 'a') << " " <<  (char)(nodeB + 'a')<< endl;
                      if(isPresent(index,nodeB)){
-                         
                          return false;
                      }
                  }
