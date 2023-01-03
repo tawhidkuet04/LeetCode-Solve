@@ -21,19 +21,31 @@ class Solution {
     }
     
     var prefixStr: String = ""
+    let charArray = Array(strs[0])
+    
     for index in  0..<minSize{
-        for charIndex in 0..<26{
-            let val = countArr[index][charIndex]
-            if val == strs.count{
+        // for charIndex in 0..<26{
+      print(charArray[index])
+         if let aschiiVal = charArray[index].asciiValue{
+              let charIndex = Int(aschiiVal - 97)
+               // print(charIndex)
+              let val = countArr[index][charIndex]
+              if val == strs.count{
                 let u = UnicodeScalar(charIndex + 97)!
                 prefixStr.append(Character(u))
-                break
-            }
+              }else{
+                  break
+              }
+                // break
+            // }
         }
-        if prefixStr.count - 1 != index{
-           break
-        }
-    }
+             
+         }
+          
+        // if prefixStr.count - 1 != index{
+        //    break
+        // }
+    // }
     
     return prefixStr
    
